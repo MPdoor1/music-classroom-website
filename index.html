@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Classroom - Interactive Learning</title>
+    <title>Music Theory Learning - Chapter 9: Rhythm and Meter</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -20,235 +20,676 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav>
         <div class="nav-container">
-            <div class="nav-logo" onclick="switchTab('home')">
-                <i class="fas fa-music"></i>
-                <span>Music Classroom</span>
-            </div>
+            <a href="#" class="nav-brand">Music Theory</a>
             <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link active" data-tab="home">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#challenges" class="nav-link" data-tab="challenges">
-                        <i class="fas fa-trophy"></i> Challenges
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#vocabulary" class="nav-link" data-tab="vocabulary">
-                        <i class="fas fa-book"></i> Vocabulary
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#before-reading" class="nav-link" data-tab="before-reading">
-                        <i class="fas fa-eye"></i> Before Reading
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#during-reading" class="nav-link" data-tab="during-reading">
-                        <i class="fas fa-book-open"></i> During Reading
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#after-reading" class="nav-link" data-tab="after-reading">
-                        <i class="fas fa-check-circle"></i> After Reading
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#readability" class="nav-link" data-tab="readability">
-                        <i class="fas fa-chart-line"></i> Readability
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#dba" class="nav-link" data-tab="dba">
-                        <i class="fas fa-graduation-cap"></i> DBA
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#ese-esol" class="nav-link" data-tab="ese-esol">
-                        <i class="fas fa-users"></i> ESE & ESOL
-                    </a>
-                </li>
+                <li><a href="#" class="nav-link active" data-tab="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-tab="vocabulary">Vocabulary</a></li>
+                <li><a href="#" class="nav-link" data-tab="before-reading">Before Reading</a></li>
+                <li><a href="#" class="nav-link" data-tab="during-reading">During Reading</a></li>
+                <li><a href="#" class="nav-link" data-tab="after-reading">After Reading</a></li>
+                <li><a href="#" class="nav-link" data-tab="readability">Readability</a></li>
             </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <h1>Learn Music Theory</h1>
-                <p>Master rhythm, meter, and music reading with interactive tools and fun activities.</p>
-                <div class="cta-buttons">
-                    <a href="#features" class="cta-button primary">Start Learning</a>
-                    <a href="#resources" class="cta-button">Practice Tools</a>
+        <!-- Home Section -->
+        <section id="home" class="tab-content active">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <h1>Learn Music Theory</h1>
+                    <p>Master rhythm, meter, and music reading with interactive tools and fun activities.</p>
+                    <div class="cta-buttons">
+                        <a href="#features" class="cta-button primary">Start Learning</a>
+                        <a href="#resources" class="cta-button">Practice Tools</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Introduction Section -->
+            <section class="introduction">
+                <div class="container">
+                    <h2>Welcome to Music Learning</h2>
+                    <p>This website helps you understand Chapter 9: Rhythm and Meter from your music textbook. Use the tools below to practice and improve your skills.</p>
+                    
+                    <div class="textbook-info">
+                        <h3>About Your Textbook</h3>
+                        <p><strong>Title:</strong> Music Theory and Practice</p>
+                        <p><strong>Chapter:</strong> 9 - Rhythm and Meter</p>
+                        <p><strong>Focus:</strong> Understanding musical timing and patterns</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- External Resources Section -->
+            <div class="resources-section">
+                <div class="container">
+                    <h2>Practice Tools</h2>
+                    <p>Click these links to practice music skills online:</p>
+                    <div class="resource-links">
+                        <a href="https://www.therhythmtrainer.com/" target="_blank" class="resource-link">
+                            <i class="fas fa-drum"></i>
+                            <div>
+                                <span>Rhythm Trainer</span>
+                                <div class="resource-description">Practice rhythm recognition and tapping exercises</div>
+                            </div>
+                        </a>
+                        <a href="https://www.musictheory.net/exercises" target="_blank" class="resource-link">
+                            <i class="fas fa-music"></i>
+                            <div>
+                                <span>Music Theory Exercises</span>
+                                <div class="resource-description">Interactive exercises for note reading and theory</div>
+                            </div>
+                        </a>
+                        <a href="https://teoria.com/" target="_blank" class="resource-link">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <span>Teoria Music Theory</span>
+                                <div class="resource-description">Comprehensive music theory tutorials and exercises</div>
+                            </div>
+                        </a>
+                        <a href="https://trainer.thetamusic.com/en/course/introduction-ear-training" target="_blank" class="resource-link">
+                            <i class="fas fa-headphones"></i>
+                            <div>
+                                <span>Ear Training</span>
+                                <div class="resource-description">Develop your musical ear with interval recognition</div>
+                            </div>
+                        </a>
+                        <a href="https://www.quia.com/ws/539163.html" target="_blank" class="resource-link">
+                            <i class="fas fa-gamepad"></i>
+                            <div>
+                                <span>Music Vocabulary Games</span>
+                                <div class="resource-description">Fun games to learn music terminology</div>
+                            </div>
+                        </a>
+                        <a href="https://www.musictheory.net/lessons" target="_blank" class="resource-link">
+                            <i class="fas fa-book-open"></i>
+                            <div>
+                                <span>Music Theory Lessons</span>
+                                <div class="resource-description">Step-by-step lessons on music theory concepts</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Introduction Section -->
-        <section class="introduction">
-            <div class="container">
-                <h2>Welcome to Music Learning</h2>
-                <p>This website helps you understand Chapter 9: Rhythm and Meter from your music textbook. Use the tools below to practice and improve your skills.</p>
+            <div class="features-grid">
+                <div class="feature-card" onclick="switchTab('vocabulary')">
+                    <i class="fas fa-book"></i>
+                    <h3>Music Words</h3>
+                    <p>Learn music terms with flashcards and games. Master the language of music.</p>
+                    <button class="feature-btn">Start Learning</button>
+                </div>
+                <div class="feature-card" onclick="switchTab('before-reading')">
+                    <i class="fas fa-eye"></i>
+                    <h3>Before Reading</h3>
+                    <p>Get ready to read Chapter 9. Learn what you already know about rhythm.</p>
+                    <button class="feature-btn">Begin</button>
+                </div>
+                <div class="feature-card" onclick="switchTab('during-reading')">
+                    <i class="fas fa-book-open"></i>
+                    <h3>While Reading</h3>
+                    <p>Use tools to help you understand rhythm and meter as you read.</p>
+                    <button class="feature-btn">View Tools</button>
+                </div>
+                <div class="feature-card" onclick="switchTab('after-reading')">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>After Reading</h3>
+                    <p>Test what you learned. Write summaries and fix mistakes.</p>
+                    <button class="feature-btn">Practice</button>
+                </div>
+                <div class="feature-card" onclick="switchTab('readability')">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Reading Level</h3>
+                    <p>See how hard Chapter 9 is to read. Understand the difficulty.</p>
+                    <button class="feature-btn">Check Level</button>
+                </div>
+                <div class="feature-card" onclick="startInteractiveDemo()">
+                    <i class="fas fa-play"></i>
+                    <h3>Try It Out</h3>
+                    <p>Click to explore music concepts. Play with rhythm and notes.</p>
+                    <button class="feature-btn">Start Demo</button>
+                </div>
+            </div>
+
+            <!-- Interactive Demo Section -->
+            <div class="interactive-demo">
+                <h3>Try Music Tools</h3>
+                <p>Click the items below to explore music concepts</p>
                 
-                <div class="textbook-info">
-                    <h3>About Your Textbook</h3>
-                    <p><strong>Title:</strong> Music Theory and Practice</p>
-                    <p><strong>Chapter:</strong> 9 - Rhythm and Meter</p>
-                    <p><strong>Focus:</strong> Understanding musical timing and patterns</p>
+                <!-- Interactive Music Notes -->
+                <div class="music-interactive">
+                    <div class="music-note" onclick="playNote('C')">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="music-note" onclick="playNote('D')">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="music-note" onclick="playNote('E')">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="music-note" onclick="playNote('F')">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="music-note" onclick="playNote('G')">
+                        <i class="fas fa-music"></i>
+                    </div>
+                </div>
+
+                <!-- Interactive Rhythm Pattern -->
+                <div class="rhythm-pattern">
+                    <div class="rhythm-beat" onclick="tapBeat(this)">♩</div>
+                    <div class="rhythm-beat" onclick="tapBeat(this)">♪</div>
+                    <div class="rhythm-beat" onclick="tapBeat(this)">♩</div>
+                    <div class="rhythm-beat" onclick="tapBeat(this)">♪</div>
+                </div>
+
+                <!-- Interactive Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+
+                <!-- Interactive Quiz Preview -->
+                <div class="quiz-preview">
+                    <div class="quiz-question">What does "forte" mean in music?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, true)">Loud</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false)">Soft</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false)">Fast</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false)">Slow</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- External Resources Section -->
-        <div class="resources-section">
-            <div class="container">
-                <h2>Practice Tools</h2>
-                <p>Click these links to practice music skills online:</p>
-                <div class="resource-links">
-                    <a href="https://www.therhythmtrainer.com/" target="_blank" class="resource-link">
-                        <i class="fas fa-drum"></i>
-                        <div>
-                            <span>Rhythm Trainer</span>
-                            <div class="resource-description">Practice rhythm recognition and tapping exercises</div>
-                        </div>
-                    </a>
-                    <a href="https://www.musictheory.net/exercises" target="_blank" class="resource-link">
-                        <i class="fas fa-music"></i>
-                        <div>
-                            <span>Music Theory Exercises</span>
-                            <div class="resource-description">Interactive exercises for note reading and theory</div>
-                        </div>
-                    </a>
-                    <a href="https://teoria.com/" target="_blank" class="resource-link">
-                        <i class="fas fa-graduation-cap"></i>
-                        <div>
-                            <span>Teoria Music Theory</span>
-                            <div class="resource-description">Comprehensive music theory tutorials and exercises</div>
-                        </div>
-                    </a>
-                    <a href="https://trainer.thetamusic.com/en/course/introduction-ear-training" target="_blank" class="resource-link">
-                        <i class="fas fa-headphones"></i>
-                        <div>
-                            <span>Ear Training</span>
-                            <div class="resource-description">Develop your musical ear with interval recognition</div>
-                        </div>
-                    </a>
-                    <a href="https://www.quia.com/ws/539163.html" target="_blank" class="resource-link">
-                        <i class="fas fa-gamepad"></i>
-                        <div>
-                            <span>Music Vocabulary Games</span>
-                            <div class="resource-description">Fun games to learn music terminology</div>
-                        </div>
-                    </a>
-                    <a href="https://www.musictheory.net/lessons" target="_blank" class="resource-link">
-                        <i class="fas fa-book-open"></i>
-                        <div>
-                            <span>Music Theory Lessons</span>
-                            <div class="resource-description">Step-by-step lessons on music theory concepts</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card" onclick="switchTab('vocabulary')">
-                <i class="fas fa-book"></i>
-                <h3>Music Words</h3>
-                <p>Learn music terms with flashcards and games. Master the language of music.</p>
-                <button class="feature-btn">Start Learning</button>
-            </div>
-            <div class="feature-card" onclick="switchTab('before-reading')">
-                <i class="fas fa-eye"></i>
-                <h3>Before Reading</h3>
-                <p>Get ready to read Chapter 9. Learn what you already know about rhythm.</p>
-                <button class="feature-btn">Begin</button>
-            </div>
-            <div class="feature-card" onclick="switchTab('during-reading')">
-                <i class="fas fa-book-open"></i>
-                <h3>While Reading</h3>
-                <p>Use tools to help you understand rhythm and meter as you read.</p>
-                <button class="feature-btn">View Tools</button>
-            </div>
-            <div class="feature-card" onclick="switchTab('after-reading')">
-                <i class="fas fa-check-circle"></i>
-                <h3>After Reading</h3>
-                <p>Test what you learned. Write summaries and fix mistakes.</p>
-                <button class="feature-btn">Practice</button>
-            </div>
-            <div class="feature-card" onclick="switchTab('readability')">
-                <i class="fas fa-chart-line"></i>
-                <h3>Reading Level</h3>
-                <p>See how hard Chapter 9 is to read. Understand the difficulty.</p>
-                <button class="feature-btn">Check Level</button>
-            </div>
-            <div class="feature-card" onclick="startInteractiveDemo()">
-                <i class="fas fa-play"></i>
-                <h3>Try It Out</h3>
-                <p>Click to explore music concepts. Play with rhythm and notes.</p>
-                <button class="feature-btn">Start Demo</button>
-            </div>
-        </div>
-
-        <!-- Interactive Demo Section -->
-        <div class="interactive-demo">
-            <h3>Try Music Tools</h3>
-            <p>Click the items below to explore music concepts</p>
-            
-            <!-- Interactive Music Notes -->
-            <div class="music-interactive">
-                <div class="music-note" onclick="playNote('C')">
-                    <i class="fas fa-music"></i>
-                </div>
-                <div class="music-note" onclick="playNote('D')">
-                    <i class="fas fa-music"></i>
-                </div>
-                <div class="music-note" onclick="playNote('E')">
-                    <i class="fas fa-music"></i>
-                </div>
-                <div class="music-note" onclick="playNote('F')">
-                    <i class="fas fa-music"></i>
-                </div>
-                <div class="music-note" onclick="playNote('G')">
-                    <i class="fas fa-music"></i>
-                </div>
+        <!-- Vocabulary Section -->
+        <section id="vocabulary" class="tab-content">
+            <div class="section-header">
+                <h2>Music Vocabulary</h2>
+                <p>Learn essential music terms and concepts through interactive strategies</p>
             </div>
 
-            <!-- Interactive Rhythm Pattern -->
-            <div class="rhythm-pattern">
-                <div class="rhythm-beat" onclick="tapBeat(this)">♩</div>
-                <div class="rhythm-beat" onclick="tapBeat(this)">♪</div>
-                <div class="rhythm-beat" onclick="tapBeat(this)">♩</div>
-                <div class="rhythm-beat" onclick="tapBeat(this)">♪</div>
-            </div>
+            <div class="vocabulary-container">
+                <div class="vocabulary-categories">
+                    <button class="category-btn active" data-category="basics">Music Basics</button>
+                    <button class="category-btn" data-category="notation">Notation</button>
+                    <button class="category-btn" data-category="dynamics">Dynamics</button>
+                    <button class="category-btn" data-category="tempo">Tempo</button>
+                    <button class="category-btn" data-category="instruments">Instruments</button>
+                </div>
 
-            <!-- Interactive Progress Bar -->
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
+                <div class="vocabulary-content">
+                    <div class="vocabulary-grid" id="vocabulary-grid">
+                        <!-- Vocabulary cards will be populated by JavaScript -->
+                    </div>
+                </div>
 
-            <!-- Interactive Quiz Preview -->
-            <div class="quiz-preview">
-                <div class="quiz-question">What does "forte" mean in music?</div>
-                <div class="quiz-options">
-                    <div class="quiz-option" onclick="selectQuizOption(this, true)">Loud</div>
-                    <div class="quiz-option" onclick="selectQuizOption(this, false)">Soft</div>
-                    <div class="quiz-option" onclick="selectQuizOption(this, false)">Fast</div>
-                    <div class="quiz-option" onclick="selectQuizOption(this, false)">Slow</div>
+                <!-- Vocabulary Learning Strategies -->
+                <div class="vocabulary-strategies">
+                    <h3>Vocabulary Learning Strategies</h3>
+                    
+                    <!-- Strategy 1: Test Knowledge Quiz -->
+                    <div class="strategy-section">
+                        <h4>Strategy 1: Test Your Knowledge Quiz</h4>
+                        <p>Challenge yourself with interactive quizzes to reinforce vocabulary understanding.</p>
+                        <div class="vocabulary-quiz">
+                            <div class="quiz-container">
+                                <div class="quiz-question" id="quiz-question">
+                                    What does "forte" mean in music?
+                                </div>
+                                <div class="quiz-options">
+                                    <button class="quiz-option" data-correct="true">Loud</button>
+                                    <button class="quiz-option" data-correct="false">Soft</button>
+                                    <button class="quiz-option" data-correct="false">Fast</button>
+                                    <button class="quiz-option" data-correct="false">Slow</button>
+                                </div>
+                                <div class="quiz-feedback" id="quiz-feedback"></div>
+                                <button class="btn btn-primary" onclick="generateNewQuiz()">Next Question</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strategy 2: Flash Cards -->
+                    <div class="strategy-section">
+                        <h4>Strategy 2: Interactive Flash Cards</h4>
+                        <p>Click on cards to flip them and learn definitions. Practice with audio examples.</p>
+                        <div class="flashcard-demo">
+                            <div class="flashcard" id="demo-flashcard">
+                                <div class="flashcard-inner">
+                                    <div class="flashcard-front">
+                                        <h5>Rhythm</h5>
+                                        <button class="audio-btn" onclick="playAudio('rhythm')">
+                                            <i class="fas fa-volume-up"></i> Listen
+                                        </button>
+                                    </div>
+                                    <div class="flashcard-back">
+                                        <p>The pattern of sounds and silences in music, including beat, meter, and tempo.</p>
+                                        <p class="example"><strong>Example:</strong> A waltz has a 1-2-3 rhythm pattern.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" onclick="flipFlashcard()">Flip Card</button>
+                        </div>
+                    </div>
+
+                    <!-- Strategy 3: Click and Drag Matching -->
+                    <div class="strategy-section">
+                        <h4>Strategy 3: Click and Drag Matching Game</h4>
+                        <p>Match music terms with their definitions by dragging and dropping.</p>
+                        <div class="matching-game">
+                            <div class="matching-container">
+                                <div class="terms-column">
+                                    <h5>Music Terms</h5>
+                                    <div class="term-item" draggable="true" data-term="tempo">
+                                        <span>Tempo</span>
+                                        <button class="audio-btn" onclick="playAudio('tempo')">
+                                            <i class="fas fa-volume-up"></i>
+                                        </button>
+                                    </div>
+                                    <div class="term-item" draggable="true" data-term="dynamics">
+                                        <span>Dynamics</span>
+                                        <button class="audio-btn" onclick="playAudio('dynamics')">
+                                            <i class="fas fa-volume-up"></i>
+                                        </button>
+                                    </div>
+                                    <div class="term-item" draggable="true" data-term="meter">
+                                        <span>Meter</span>
+                                        <button class="audio-btn" onclick="playAudio('meter')">
+                                            <i class="fas fa-volume-up"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="definitions-column">
+                                    <h5>Definitions</h5>
+                                    <div class="definition-slot" data-term="tempo">
+                                        <span>Drop here</span>
+                                    </div>
+                                    <div class="definition-slot" data-term="dynamics">
+                                        <span>Drop here</span>
+                                    </div>
+                                    <div class="definition-slot" data-term="meter">
+                                        <span>Drop here</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="matching-feedback" id="matching-feedback"></div>
+                            <button class="btn btn-primary" onclick="resetMatchingGame()">Reset Game</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Before Reading Activities Section -->
+        <section id="before-reading" class="tab-content">
+            <div class="section-header">
+                <h2>Before Reading Activities</h2>
+                <p>Prepare for reading Chapter 9: Rhythm and Meter</p>
+            </div>
+
+            <div class="before-reading-container">
+                <div class="activity-intro">
+                    <h3>Pre-Reading Strategies</h3>
+                    <p>These activities help you activate prior knowledge, make predictions, and engage with the content before reading Chapter 9.</p>
+                </div>
+
+                <!-- Activity 1: Prior Knowledge Activation -->
+                <div class="reading-activity">
+                    <h4>Activity 1: Prior Knowledge Brainstorming</h4>
+                    <p><strong>Purpose:</strong> Activate what you already know about rhythm and meter</p>
+                    <div class="activity-example">
+                        <h5>Student Example:</h5>
+                        <div class="brainstorm-chart">
+                            <div class="chart-section">
+                                <h6>What I Know About Rhythm:</h6>
+                                <ul>
+                                    <li>Rhythm is the beat of music</li>
+                                    <li>Some songs are fast, some are slow</li>
+                                    <li>I can clap along to music</li>
+                                    <li>Dancing follows rhythm</li>
+                                </ul>
+                            </div>
+                            <div class="chart-section">
+                                <h6>What I Know About Meter:</h6>
+                                <ul>
+                                    <li>Meter has something to do with counting</li>
+                                    <li>Marching music has a strong beat</li>
+                                    <li>I'm not sure about this one</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 2: Prediction Making -->
+                <div class="reading-activity">
+                    <h4>Activity 2: Making Predictions</h4>
+                    <p><strong>Purpose:</strong> Make educated guesses about what you'll learn</p>
+                    <div class="activity-example">
+                        <h5>Student Example:</h5>
+                        <div class="prediction-chart">
+                            <div class="prediction-item">
+                                <h6>Based on the title "Rhythm and Meter," I predict:</h6>
+                                <ul>
+                                    <li>I will learn how to count beats in music</li>
+                                    <li>I will understand different types of rhythm patterns</li>
+                                    <li>I will learn how to read rhythm notation</li>
+                                    <li>I will understand what makes music feel different</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 3: Vocabulary Preview -->
+                <div class="reading-activity">
+                    <h4>Activity 3: Vocabulary Preview</h4>
+                    <p><strong>Purpose:</strong> Preview key terms you'll encounter</p>
+                    <div class="activity-example">
+                        <h5>Student Example:</h5>
+                        <div class="vocab-preview">
+                            <div class="vocab-item">
+                                <span class="term">Beat</span>
+                                <span class="guess">My guess: The steady pulse in music</span>
+                            </div>
+                            <div class="vocab-item">
+                                <span class="term">Measure</span>
+                                <span class="guess">My guess: A section of music with a certain number of beats</span>
+                            </div>
+                            <div class="vocab-item">
+                                <span class="term">Time Signature</span>
+                                <span class="guess">My guess: Numbers that tell you how to count the music</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- During Reading Activities Section -->
+        <section id="during-reading" class="tab-content">
+            <div class="section-header">
+                <h2>During Reading Activities</h2>
+                <p>Active reading strategies for Chapter 9: Rhythm and Meter</p>
+            </div>
+
+            <div class="during-reading-container">
+                <div class="activity-intro">
+                    <h3>During-Reading Strategies</h3>
+                    <p>These graphic organizers and strategies help you actively engage with the text while reading.</p>
+                </div>
+
+                <!-- Activity 1: Main Idea and Details -->
+                <div class="reading-activity">
+                    <h4>Activity 1: Main Idea and Supporting Details</h4>
+                    <p><strong>Purpose:</strong> Identify the main concepts and supporting information</p>
+                    <div class="activity-example">
+                        <h5>Student Example:</h5>
+                        <div class="main-idea-chart">
+                            <div class="main-idea">
+                                <h6>Main Idea: Rhythm is the foundation of musical structure</h6>
+                            </div>
+                            <div class="supporting-details">
+                                <div class="detail">
+                                    <span class="detail-label">Detail 1:</span>
+                                    <span class="detail-text">Rhythm includes beat, meter, and tempo</span>
+                                </div>
+                                <div class="detail">
+                                    <span class="detail-label">Detail 2:</span>
+                                    <span class="detail-text">Beat is the steady pulse that underlies all music</span>
+                                </div>
+                                <div class="detail">
+                                    <span class="detail-label">Detail 3:</span>
+                                    <span class="detail-text">Meter organizes beats into regular patterns</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 2: Compare and Contrast -->
+                <div class="reading-activity">
+                    <h4>Activity 2: Compare and Contrast Different Meters</h4>
+                    <p><strong>Purpose:</strong> Understand the differences between common meters</p>
+                    <div class="activity-example">
+                        <h5>Student Example:</h5>
+                        <div class="compare-contrast-chart">
+                            <div class="comparison-item">
+                                <h6>2/4 Meter (Duple)</h6>
+                                <ul>
+                                    <li>Two beats per measure</li>
+                                    <li>Strong-weak pattern</li>
+                                    <li>Common in marches</li>
+                                    <li>Feels like: "ONE-two, ONE-two"</li>
+                                </ul>
+                            </div>
+                            <div class="comparison-item">
+                                <h6>3/4 Meter (Triple)</h6>
+                                <ul>
+                                    <li>Three beats per measure</li>
+                                    <li>Strong-weak-weak pattern</li>
+                                    <li>Common in waltzes</li>
+                                    <li>Feels like: "ONE-two-three, ONE-two-three"</li>
+                                </ul>
+                            </div>
+                            <div class="comparison-item">
+                                <h6>4/4 Meter (Quadruple)</h6>
+                                <ul>
+                                    <li>Four beats per measure</li>
+                                    <li>Strong-weak-medium-weak pattern</li>
+                                    <li>Most common meter</li>
+                                    <li>Feels like: "ONE-two-THREE-four"</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 3: Cause and Effect -->
+                <div class="reading-activity">
+                    <h4>Activity 3: Cause and Effect in Music</h4>
+                    <p><strong>Purpose:</strong> Understand how different elements affect musical feel</p>
+                    <div class="activity-example">
+                        <h5>Student Example:</h5>
+                        <div class="cause-effect-chart">
+                            <div class="cause-effect-item">
+                                <div class="cause">
+                                    <h6>Cause: Fast tempo (allegro)</h6>
+                                </div>
+                                <div class="effect">
+                                    <h6>Effect: Music feels energetic and exciting</h6>
+                                </div>
+                            </div>
+                            <div class="cause-effect-item">
+                                <div class="cause">
+                                    <h6>Cause: Strong accent on beat 1</h6>
+                                </div>
+                                <div class="effect">
+                                    <h6>Effect: Clear sense of meter and structure</h6>
+                                </div>
+                            </div>
+                            <div class="cause-effect-item">
+                                <div class="cause">
+                                    <h6>Cause: Syncopated rhythm</h6>
+                                </div>
+                                <div class="effect">
+                                    <h6>Effect: Unexpected, jazzy feel</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- After Reading Activities Section -->
+        <section id="after-reading" class="tab-content">
+            <div class="section-header">
+                <h2>After Reading Activities</h2>
+                <p>Solidify understanding and correct misconceptions</p>
+            </div>
+
+            <div class="after-reading-container">
+                <div class="activity-intro">
+                    <h3>Post-Reading Strategies</h3>
+                    <p>These activities help you review, reflect, and connect what you've learned.</p>
+                </div>
+
+                <!-- Activity 1: Summary Writing -->
+                <div class="reading-activity">
+                    <h4>Activity 1: Summary Writing</h4>
+                    <p><strong>Purpose:</strong> Synthesize main ideas in your own words</p>
+                    <div class="activity-example">
+                        <h5>Student Example:</h5>
+                        <div class="summary-example">
+                            <p><strong>My Summary:</strong></p>
+                            <p>Chapter 9 taught me that rhythm is more than just the beat of music. It's a complex system that includes beat (the steady pulse), meter (how beats are organized), and tempo (how fast or slow the music is). I learned that different meters create different feelings - 2/4 feels like marching, 3/4 feels like dancing a waltz, and 4/4 is the most common and versatile. The time signature tells you how many beats are in each measure and what note gets one beat. This helps musicians know how to count and play the music correctly.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 2: Misconception Correction -->
+                <div class="reading-activity">
+                    <h4>Activity 2: Misconception Correction</h4>
+                    <p><strong>Purpose:</strong> Identify and correct misunderstandings</p>
+                    <div class="activity-example">
+                        <h5>Student Example:</h5>
+                        <div class="misconception-chart">
+                            <div class="misconception-item">
+                                <div class="before">
+                                    <h6>Before Reading:</h6>
+                                    <p>I thought rhythm and beat were the same thing.</p>
+                                </div>
+                                <div class="after">
+                                    <h6>After Reading:</h6>
+                                    <p>I learned that beat is just one part of rhythm. Rhythm also includes meter, tempo, and the pattern of sounds and silences.</p>
+                                </div>
+                            </div>
+                            <div class="misconception-item">
+                                <div class="before">
+                                    <h6>Before Reading:</h6>
+                                    <p>I thought all music had the same meter.</p>
+                                </div>
+                                <div class="after">
+                                    <h6>After Reading:</h6>
+                                    <p>I learned that different pieces of music can have different meters (2/4, 3/4, 4/4, etc.) which creates different feelings and styles.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 3: Application to Real Music -->
+                <div class="reading-activity">
+                    <h4>Activity 3: Apply Learning to Real Music</h4>
+                    <p><strong>Purpose:</strong> Connect concepts to actual music examples</p>
+                    <div class="activity-example">
+                        <h5>Student Example:</h5>
+                        <div class="application-chart">
+                            <div class="music-example">
+                                <h6>Song: "Twinkle Twinkle Little Star"</h6>
+                                <ul>
+                                    <li><strong>Meter:</strong> 4/4 (four beats per measure)</li>
+                                    <li><strong>Tempo:</strong> Moderate (andante)</li>
+                                    <li><strong>Rhythm Pattern:</strong> Simple, steady quarter notes</li>
+                                    <li><strong>Why it works:</strong> The simple rhythm makes it easy for children to sing and remember</li>
+                                </ul>
+                            </div>
+                            <div class="music-example">
+                                <h6>Song: "Waltz of the Flowers" (Tchaikovsky)</h6>
+                                <ul>
+                                    <li><strong>Meter:</strong> 3/4 (three beats per measure)</li>
+                                    <li><strong>Tempo:</strong> Moderate (moderato)</li>
+                                    <li><strong>Rhythm Pattern:</strong> Waltz rhythm with emphasis on beat 1</li>
+                                    <li><strong>Why it works:</strong> The 3/4 meter creates the flowing, dance-like quality of a waltz</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Readability Analysis Section -->
+        <section id="readability" class="tab-content">
+            <div class="section-header">
+                <h2>Readability Analysis</h2>
+                <p>Analyze and improve your music reading skills</p>
+            </div>
+
+            <!-- Readability Section -->
+            <div class="readability-section">
+                <div class="container">
+                    <div class="readability-content">
+                        <div class="readability-explanation">
+                            <h3>What is Readability?</h3>
+                            <p>Readability refers to how easy or difficult a text is to read and understand. It considers factors like sentence length, word complexity, and vocabulary level. Readability measures help teachers match texts to students' reading abilities, ensuring students can access content within their Zone of Proximal Development.</p>
+                            
+                            <h4>Benefits of Readability Analysis:</h4>
+                            <ul>
+                                <li>Helps teachers select appropriate texts for different reading levels</li>
+                                <li>Guides scaffolding strategies to support student comprehension</li>
+                                <li>Identifies potential vocabulary and syntax challenges</li>
+                                <li>Supports differentiated instruction</li>
+                            </ul>
+                            
+                            <h4>Limits of Readability:</h4>
+                            <ul>
+                                <li>Doesn't account for prior knowledge or interest in the topic</li>
+                                <li>May not reflect the complexity of music notation and symbols</li>
+                                <li>Formula-based calculations can oversimplify text complexity</li>
+                                <li>Doesn't consider cultural or linguistic background</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="readability-results">
+                            <h3>Chapter 9 Readability Analysis</h3>
+                            <div class="readability-metrics">
+                                <div class="metric-card">
+                                    <h4>Flesch-Kincaid Readability</h4>
+                                    <div class="metric-results">
+                                        <p><strong>Grade Level:</strong> 4.6</p>
+                                        <p><strong>Reading Ease:</strong> 73.3 (Fairly easy to read)</p>
+                                        <p><strong>Average Words per Sentence:</strong> 6.5</p>
+                                        <p><strong>Average Syllables per Word:</strong> 1.5</p>
+                                        <p><strong>Total Sentences:</strong> 470</p>
+                                        <p><strong>Total Words:</strong> 3,061</p>
+                                    </div>
+                                    <p class="citation">Sanders, J., & Stacy, A. (2015). Flesch Kincaid Calculator. Good Calculators: Free Online Calculators. <a href="https://goodcalculators.com/flesch-kincaid-calculator" target="_blank">https://goodcalculators.com/flesch-kincaid-calculator</a></p>
+                                </div>
+                                
+                                <div class="metric-card">
+                                    <h4>Fry Readability</h4>
+                                    <div class="metric-results">
+                                        <p><strong>Reading Level:</strong> 12th grade</p>
+                                        <p><strong>Average Sentence Length:</strong> 7.3</p>
+                                        <p><strong>Average Syllables per Word:</strong> 159.7</p>
+                                        <p><strong>Total Sentences:</strong> 181</p>
+                                        <p><strong>Total Words:</strong> 3,036</p>
+                                        <p><strong>Total Characters:</strong> 17,402</p>
+                                    </div>
+                                    <p class="citation">Özdemir, B. (n.d.). Fry readability calculator. Fry Readability Graph. <a href="https://charactercalculator.com/fry-readability-calculator/" target="_blank">https://charactercalculator.com/fry-readability-calculator/</a></p>
+                                </div>
+                            </div>
+                            
+                            <div class="readability-interpretation">
+                                <h4>Analysis Summary:</h4>
+                                <p>The Flesch-Kincaid analysis suggests the text is accessible to 4th-5th grade readers, while the Fry analysis indicates 12th grade level. This discrepancy highlights the importance of using multiple readability measures and considering the specialized nature of music terminology. The text contains many technical terms that may require additional scaffolding despite the relatively simple sentence structure.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -262,7 +703,6 @@
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="#" onclick="switchTab('home')">Home</a></li>
-                    <li><a href="#" onclick="switchTab('challenges')">Challenges</a></li>
                     <li><a href="#" onclick="switchTab('vocabulary')">Vocabulary</a></li>
                     <li><a href="#" onclick="switchTab('readability')">Readability</a></li>
                 </ul>
@@ -270,8 +710,6 @@
             <div class="footer-section">
                 <h4>Resources</h4>
                 <ul>
-                    <li><a href="#" onclick="switchTab('dba')">DBA</a></li>
-                    <li><a href="#" onclick="switchTab('ese-esol')">ESE & ESOL</a></li>
                     <li><a href="#">Help</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
