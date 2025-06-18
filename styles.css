@@ -353,7 +353,7 @@ body {
 .key.black {
     background: #333;
     width: 28px;
-    height: 120px;
+    height: 180px;
     position: absolute;
     border-radius: 0 0 6px 6px;
     z-index: 2;
