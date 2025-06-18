@@ -367,18 +367,28 @@ body {
 /* Each white key is 40px wide, black keys positioned between white keys */
 
 /* Octave 4 (C4-B4) - Middle C octave - 12 keys */
-.key[data-note="C#4"] { left: 30px; }
-.key[data-note="D#4"] { left: 71px; }
-.key[data-note="F#4"] { left: 153px; }
-.key[data-note="G#4"] { left: 194px; }
-.key[data-note="A#4"] { left: 235px; }
+/* C#4: between C4 (0-40px) and D4 (41-81px) = centered at 40.5px */
+.key[data-note="C#4"] { left: 26px; }
+/* D#4: between D4 (41-81px) and E4 (82-122px) = centered at 81.5px */
+.key[data-note="D#4"] { left: 67px; }
+/* F#4: between F4 (123-163px) and G4 (164-204px) = centered at 163.5px */
+.key[data-note="F#4"] { left: 149px; }
+/* G#4: between G4 (164-204px) and A4 (205-245px) = centered at 204.5px */
+.key[data-note="G#4"] { left: 190px; }
+/* A#4: between A4 (205-245px) and B4 (246-286px) = centered at 245.5px */
+.key[data-note="A#4"] { left: 231px; }
 
 /* Octave 5 (C5-C6) - 13 keys */
-.key[data-note="C#5"] { left: 276px; }
-.key[data-note="D#5"] { left: 317px; }
-.key[data-note="F#5"] { left: 399px; }
-.key[data-note="G#5"] { left: 440px; }
-.key[data-note="A#5"] { left: 481px; }
+/* C#5: between C5 (287-327px) and D5 (328-368px) = centered at 327.5px */
+.key[data-note="C#5"] { left: 313px; }
+/* D#5: between D5 (328-368px) and E5 (369-409px) = centered at 368.5px */
+.key[data-note="D#5"] { left: 354px; }
+/* F#5: between F5 (410-450px) and G5 (451-491px) = centered at 450.5px */
+.key[data-note="F#5"] { left: 436px; }
+/* G#5: between G5 (451-491px) and A5 (492-532px) = centered at 491.5px */
+.key[data-note="G#5"] { left: 477px; }
+/* A#5: between A5 (492-532px) and B5 (533-573px) = centered at 532.5px */
+.key[data-note="A#5"] { left: 518px; }
 
 .key.playing {
     background: #007bff !important;
