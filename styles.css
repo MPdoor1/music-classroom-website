@@ -295,6 +295,7 @@ body {
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     overflow: hidden;
+    margin: 2rem 0;
 }
 
 .piano-keys {
@@ -302,13 +303,13 @@ body {
     position: relative;
     border-radius: 8px;
     overflow: hidden;
-    transform: scale(0.6);
-    margin: 1rem 0;
+    background: var(--bg);
+    padding: 1rem;
 }
 
 .key {
-    width: 35px;
-    height: 120px;
+    width: 60px;
+    height: 200px;
     border: 1px solid var(--border);
     cursor: pointer;
     transition: var(--transition);
@@ -318,7 +319,7 @@ body {
     padding-bottom: 1rem;
     font-weight: 600;
     position: relative;
-    font-size: 0.5rem;
+    font-size: 0.8rem;
 }
 
 .key.white {
@@ -326,26 +327,44 @@ body {
     color: var(--bg);
     border-radius: 0 0 8px 8px;
     z-index: 1;
+    border-right: 1px solid #ccc;
+}
+
+.key.white:last-child {
+    border-right: 1px solid var(--border);
 }
 
 .key.black {
     background: var(--bg);
     color: white;
-    width: 22px;
-    height: 75px;
+    width: 40px;
+    height: 120px;
     position: absolute;
     z-index: 2;
     border-radius: 0 0 6px 6px;
-    font-size: 0.4rem;
+    font-size: 0.7rem;
+    border: 1px solid #333;
 }
 
-/* Position black keys */
-.key[data-note="C#4"], .key[data-note="C#5"],
-.key[data-note="D#4"], .key[data-note="D#5"],
-.key[data-note="F#4"], .key[data-note="F#5"],
-.key[data-note="G#4"], .key[data-note="G#5"],
+/* Position black keys correctly like a real piano */
+.key[data-note="C#4"], .key[data-note="C#5"] {
+    left: 45px;
+}
+
+.key[data-note="D#4"], .key[data-note="D#5"] {
+    left: 105px;
+}
+
+.key[data-note="F#4"], .key[data-note="F#5"] {
+    left: 225px;
+}
+
+.key[data-note="G#4"], .key[data-note="G#5"] {
+    left: 285px;
+}
+
 .key[data-note="A#4"], .key[data-note="A#5"] {
-    margin-left: -11px;
+    left: 345px;
 }
 
 .key:hover {
@@ -1570,7 +1589,7 @@ body {
     }
 
     .piano-keys {
-        transform: scale(0.6);
+        transform: scale(0.8);
         margin: 1rem 0;
     }
 
@@ -1627,7 +1646,7 @@ body {
     }
 
     .piano-keys {
-        transform: scale(0.6);
+        transform: scale(0.8);
     }
 
     .note-options {
