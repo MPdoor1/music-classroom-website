@@ -286,86 +286,8 @@ body {
 }
 
 /* Interactive Music Element */
-.interactive-music-element {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    background: var(--surface);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    margin: 2rem 0;
-    min-height: 400px;
-    position: relative;
-}
 
-.floating-note {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background: var(--gradient);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
-    animation: float 3s ease-in-out infinite;
-    z-index: 10;
-}
-
-.floating-note:hover {
-    transform: scale(1.1);
-    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
-}
-
-.floating-note:active {
-    transform: scale(0.95);
-}
-
-.floating-note i {
-    font-size: 2rem;
-    color: white;
-    animation: pulse 2s infinite;
-}
-
-@keyframes float {
-    0%, 100% { 
-        transform: translateY(0px) rotate(0deg); 
-    }
-    50% { 
-        transform: translateY(-10px) rotate(5deg); 
-    }
-}
-
-@keyframes pulse {
-    0%, 100% { 
-        transform: scale(1); 
-    }
-    50% { 
-        transform: scale(1.1); 
-    }
-}
-
-.music-info {
-    text-align: center;
-    margin-top: 2rem;
-    z-index: 1;
-}
-
-.music-info h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--text);
-}
-
-.music-info p {
-    color: var(--text-secondary);
-    font-size: 1rem;
-}
+/* Fullscreen Music Experience */
 
 /* Features Grid */
 .features-grid {
@@ -1674,4 +1596,111 @@ body {
     .note-options {
         grid-template-columns: repeat(4, 1fr);
     }
+}
+
+/* Fullscreen Music Experience */
+.fullscreen-music {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.music-balls-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.music-ball {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    animation: float 4s ease-in-out infinite;
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.music-ball:hover {
+    transform: scale(1.2);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+.music-ball:active {
+    transform: scale(0.9);
+}
+
+.music-ball i {
+    font-size: 1.5rem;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+/* Different colors for different balls */
+.music-ball:nth-child(1) { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+.music-ball:nth-child(2) { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+.music-ball:nth-child(3) { background: linear-gradient(135deg, #10b981, #06b6d4); }
+.music-ball:nth-child(4) { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+.music-ball:nth-child(5) { background: linear-gradient(135deg, #f97316, #eab308); }
+.music-ball:nth-child(6) { background: linear-gradient(135deg, #06b6d4, #3b82f6); }
+.music-ball:nth-child(7) { background: linear-gradient(135deg, #ec4899, #f43f5e); }
+.music-ball:nth-child(8) { background: linear-gradient(135deg, #84cc16, #22c55e); }
+.music-ball:nth-child(9) { background: linear-gradient(135deg, #f43f5e, #a855f7); }
+.music-ball:nth-child(10) { background: linear-gradient(135deg, #22c55e, #14b8a6); }
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-15px) rotate(8deg); 
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.1); 
+    }
+}
+
+.music-info {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 20;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 1rem 2rem;
+    border-radius: var(--radius);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.music-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.music-info p {
+    color: var(--text-secondary);
+    font-size: 1rem;
 }
