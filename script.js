@@ -157,21 +157,24 @@ function initializePiano() {
     
     keys.forEach((key, index) => {
         const note = key.getAttribute('data-note');
+        const frequency = key.getAttribute('data-frequency');
         const isBlack = key.classList.contains('black');
-        console.log(`Key ${index}: ${note} (${isBlack ? 'black' : 'white'})`);
+        console.log(`Key ${index}: ${note} (${isBlack ? 'black' : 'white'}) - ${frequency}Hz`);
         
-        // Single click event handler to prevent double sounds
+        // Single click event handler
         key.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             const note = this.getAttribute('data-note');
-            console.log('Playing note:', note);
-            playNote(note);
+            const frequency = this.getAttribute('data-frequency');
+            console.log('Playing note:', note, 'Frequency:', frequency);
+            playNote(note, frequency);
+            updatePianoDisplay(note, frequency);
             this.classList.add('playing');
             setTimeout(() => this.classList.remove('playing'), 200);
         });
 
-        // Visual feedback for mouse/touch
+        // Visual feedback
         key.addEventListener('mousedown', function(e) {
             e.preventDefault();
             this.classList.add('playing');
@@ -185,7 +188,7 @@ function initializePiano() {
             this.classList.remove('playing');
         });
 
-        // Touch events for mobile (visual only, sound handled by click)
+        // Touch events for mobile
         key.addEventListener('touchstart', function(e) {
             e.preventDefault();
             this.classList.add('playing');
@@ -194,46 +197,133 @@ function initializePiano() {
         key.addEventListener('touchend', function() {
             this.classList.remove('playing');
         });
+
+        // Keyboard events for accessibility
+        key.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        const keys = document.querySelectorAll('.key');
+        const currentKey = document.querySelector('.key:focus');
+        
+        if (!currentKey) return;
+        
+        const currentIndex = Array.from(keys).indexOf(currentKey);
+        let nextIndex = currentIndex;
+        
+        switch(e.key) {
+            case 'ArrowLeft':
+                e.preventDefault();
+                nextIndex = Math.max(0, currentIndex - 1);
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                nextIndex = Math.min(keys.length - 1, currentIndex + 1);
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                // Find the same note in the next octave
+                const currentNote = currentKey.getAttribute('data-note');
+                const noteName = currentNote.replace(/\d/, '');
+                const currentOctave = parseInt(currentNote.match(/\d/)[0]);
+                const nextOctave = Math.min(8, currentOctave + 1);
+                const nextNote = noteName + nextOctave;
+                const nextKey = document.querySelector(`[data-note="${nextNote}"]`);
+                if (nextKey) {
+                    nextKey.focus();
+                    nextKey.click();
+                }
+                return;
+            case 'ArrowDown':
+                e.preventDefault();
+                // Find the same note in the previous octave
+                const currentNoteDown = currentKey.getAttribute('data-note');
+                const noteNameDown = currentNoteDown.replace(/\d/, '');
+                const currentOctaveDown = parseInt(currentNoteDown.match(/\d/)[0]);
+                const prevOctave = Math.max(0, currentOctaveDown - 1);
+                const prevNote = noteNameDown + prevOctave;
+                const prevKey = document.querySelector(`[data-note="${prevNote}"]`);
+                if (prevKey) {
+                    prevKey.focus();
+                    prevKey.click();
+                }
+                return;
+        }
+        
+        if (nextIndex !== currentIndex) {
+            keys[nextIndex].focus();
+            keys[nextIndex].click();
+        }
     });
 }
 
-function playNote(note) {
-    // Create audio context for synthesizer
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+function updatePianoDisplay(note, frequency) {
+    const noteDisplay = document.getElementById('current-note-display');
+    const frequencyDisplay = document.getElementById('frequency-display');
+    const octaveDisplay = document.getElementById('octave-display');
+    
+    if (noteDisplay) {
+        noteDisplay.textContent = `Note: ${note}`;
+    }
+    
+    if (frequencyDisplay) {
+        frequencyDisplay.textContent = `Frequency: ${frequency} Hz`;
+    }
+    
+    if (octaveDisplay) {
+        const octave = note.match(/\d/)[0];
+        octaveDisplay.textContent = `Octave: ${octave}`;
+    }
+}
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    // Correct frequencies for proper octaves - C4 is middle C (261.63 Hz)
-    const frequencies = {
-        // Octave 3 (lower octave)
-        'C3': 130.81, 'C#3': 138.59, 'D3': 146.83, 'D#3': 155.56,
-        'E3': 164.81, 'F3': 174.61, 'F#3': 185.00, 'G3': 196.00,
-        'G#3': 207.65, 'A3': 220.00, 'A#3': 233.08, 'B3': 246.94,
-        // Octave 4 (middle octave - C4 is middle C)
-        'C4': 261.63, 'C#4': 277.18, 'D4': 293.66, 'D#4': 311.13,
-        'E4': 329.63, 'F4': 349.23, 'F#4': 369.99, 'G4': 392.00,
-        'G#4': 415.30, 'A4': 440.00, 'A#4': 466.16, 'B4': 493.88,
-        // Octave 5 (upper octave)
-        'C5': 523.25, 'C#5': 554.37, 'D5': 587.33, 'D#5': 622.25,
-        'E5': 659.25, 'F5': 698.46, 'F#5': 739.99, 'G5': 783.99,
-        'G#5': 830.61, 'A5': 880.00, 'A#5': 932.33, 'B5': 987.77,
-        // Octave 6 (highest octave)
-        'C6': 1046.50, 'C#6': 1108.73, 'D6': 1174.66, 'D#6': 1244.51,
-        'E6': 1318.51, 'F6': 1396.91, 'F#6': 1479.98, 'G6': 1567.98,
-        'G#6': 1661.22, 'A6': 1760.00, 'A#6': 1864.66, 'B6': 1975.53
-    };
-
-    oscillator.frequency.setValueAtTime(frequencies[note] || 440, audioContext.currentTime);
-    oscillator.type = 'sine';
-
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.5);
+function playNote(note, frequency) {
+    // Create Web Audio API context if it doesn't exist
+    if (!window.audioContext) {
+        window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    
+    // Resume audio context if suspended
+    if (window.audioContext.state === 'suspended') {
+        window.audioContext.resume();
+    }
+    
+    try {
+        // Create oscillator
+        const oscillator = window.audioContext.createOscillator();
+        const gainNode = window.audioContext.createGain();
+        
+        // Connect nodes
+        oscillator.connect(gainNode);
+        gainNode.connect(window.audioContext.destination);
+        
+        // Set frequency
+        oscillator.frequency.setValueAtTime(parseFloat(frequency), window.audioContext.currentTime);
+        
+        // Set waveform (sine wave for piano-like sound)
+        oscillator.type = 'sine';
+        
+        // Set envelope for piano-like sound
+        const now = window.audioContext.currentTime;
+        gainNode.gain.setValueAtTime(0, now);
+        gainNode.gain.linearRampToValueAtTime(0.3, now + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+        
+        // Start and stop oscillator
+        oscillator.start(now);
+        oscillator.stop(now + 0.5);
+        
+        console.log(`Playing ${note} at ${frequency}Hz`);
+    } catch (error) {
+        console.error('Error playing note:', error);
+        // Fallback: just log the note
+        console.log(`Note played: ${note} (${frequency}Hz)`);
+    }
 }
 
 // Note Recognition Game

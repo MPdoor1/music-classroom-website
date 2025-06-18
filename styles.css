@@ -288,15 +288,26 @@ body {
 /* Interactive Piano */
 .interactive-piano {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 2rem;
     background: var(--surface);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    overflow: visible;
+    overflow: hidden;
     margin: 2rem 0;
-    min-height: 250px;
+    min-height: 300px;
+}
+
+.piano-container {
+    width: 100%;
+    max-width: 1400px;
+    overflow-x: auto;
+    padding: 20px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .piano-keys {
@@ -308,7 +319,8 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: visible;
     min-height: 200px;
-    width: 100%;
+    width: max-content;
+    min-width: 100%;
 }
 
 .key {
@@ -319,20 +331,20 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     color: #333;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    margin-right: 1px;
 }
 
 .key.white {
     background: white;
-    width: 60px;
+    width: 40px;
     height: 180px;
-    margin-right: 2px;
     border-radius: 0 0 8px 8px;
     z-index: 1;
     flex-shrink: 0;
@@ -340,7 +352,7 @@ body {
 
 .key.black {
     background: #333;
-    width: 40px;
+    width: 28px;
     height: 120px;
     position: absolute;
     border-radius: 0 0 6px 6px;
@@ -348,43 +360,63 @@ body {
     color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     top: 0;
+    margin-right: 0;
 }
 
-/* Position black keys between white keys - each white key is 62px wide (60px + 2px margin) */
-/* C# should be centered between C and D (position 31px from left edge of C) */
-.key[data-note*="C#"] { left: 31px; }
+/* Black key positioning - calculated based on white key positions */
+/* Each white key is 40px wide + 1px margin = 41px total width */
 
-/* D# should be centered between D and E (position 93px from left edge of C) */
-.key[data-note*="D#"] { left: 93px; }
+/* Octave 1 (A0-B0) - 3 keys */
+.key[data-note="A#0"] { left: 25px; }
 
-/* F# should be centered between F and G (position 217px from left edge of C) */
-.key[data-note*="F#"] { left: 217px; }
+/* Octave 2 (C1-B1) - 12 keys */
+.key[data-note="C#1"] { left: 25px; }
+.key[data-note="D#1"] { left: 66px; }
+.key[data-note="F#1"] { left: 148px; }
+.key[data-note="G#1"] { left: 189px; }
+.key[data-note="A#1"] { left: 230px; }
 
-/* G# should be centered between G and A (position 279px from left edge of C) */
-.key[data-note*="G#"] { left: 279px; }
+/* Octave 3 (C2-B2) - 12 keys */
+.key[data-note="C#2"] { left: 271px; }
+.key[data-note="D#2"] { left: 312px; }
+.key[data-note="F#2"] { left: 394px; }
+.key[data-note="G#2"] { left: 435px; }
+.key[data-note="A#2"] { left: 476px; }
 
-/* A# should be centered between A and B (position 341px from left edge of C) */
-.key[data-note*="A#"] { left: 341px; }
+/* Octave 4 (C3-B3) - 12 keys */
+.key[data-note="C#3"] { left: 517px; }
+.key[data-note="D#3"] { left: 558px; }
+.key[data-note="F#3"] { left: 640px; }
+.key[data-note="G#3"] { left: 681px; }
+.key[data-note="A#3"] { left: 722px; }
 
-/* Adjust for different octaves - each octave is 744px wide (12 white keys * 62px) */
-.key[data-note*="4"] { left: calc(31px + 744px); }
-.key[data-note*="5"] { left: calc(31px + 1488px); }
-.key[data-note*="6"] { left: calc(31px + 2232px); }
+/* Octave 5 (C4-B4) - Middle C octave - 12 keys */
+.key[data-note="C#4"] { left: 763px; }
+.key[data-note="D#4"] { left: 804px; }
+.key[data-note="F#4"] { left: 886px; }
+.key[data-note="G#4"] { left: 927px; }
+.key[data-note="A#4"] { left: 968px; }
 
-.key[data-note*="4"][data-note*="D#"] { left: calc(93px + 744px); }
-.key[data-note*="4"][data-note*="F#"] { left: calc(217px + 744px); }
-.key[data-note*="4"][data-note*="G#"] { left: calc(279px + 744px); }
-.key[data-note*="4"][data-note*="A#"] { left: calc(341px + 744px); }
+/* Octave 6 (C5-B5) - 12 keys */
+.key[data-note="C#5"] { left: 1009px; }
+.key[data-note="D#5"] { left: 1050px; }
+.key[data-note="F#5"] { left: 1132px; }
+.key[data-note="G#5"] { left: 1173px; }
+.key[data-note="A#5"] { left: 1214px; }
 
-.key[data-note*="5"][data-note*="D#"] { left: calc(93px + 1488px); }
-.key[data-note*="5"][data-note*="F#"] { left: calc(217px + 1488px); }
-.key[data-note*="5"][data-note*="G#"] { left: calc(279px + 1488px); }
-.key[data-note*="5"][data-note*="A#"] { left: calc(341px + 1488px); }
+/* Octave 7 (C6-B6) - 12 keys */
+.key[data-note="C#6"] { left: 1255px; }
+.key[data-note="D#6"] { left: 1296px; }
+.key[data-note="F#6"] { left: 1378px; }
+.key[data-note="G#6"] { left: 1419px; }
+.key[data-note="A#6"] { left: 1460px; }
 
-.key[data-note*="6"][data-note*="D#"] { left: calc(93px + 2232px); }
-.key[data-note*="6"][data-note*="F#"] { left: calc(217px + 2232px); }
-.key[data-note*="6"][data-note*="G#"] { left: calc(279px + 2232px); }
-.key[data-note*="6"][data-note*="A#"] { left: calc(341px + 2232px); }
+/* Octave 8 (C7-C8) - 13 keys */
+.key[data-note="C#7"] { left: 1501px; }
+.key[data-note="D#7"] { left: 1542px; }
+.key[data-note="F#7"] { left: 1624px; }
+.key[data-note="G#7"] { left: 1665px; }
+.key[data-note="A#7"] { left: 1706px; }
 
 .key.playing {
     background: #007bff !important;
@@ -398,6 +430,34 @@ body {
 
 .key.black:hover {
     background: #555 !important;
+}
+
+/* Piano Info Display */
+.piano-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    min-width: 200px;
+}
+
+.note-display {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-align: center;
+}
+
+.frequency-display,
+.octave-display {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-align: center;
 }
 
 /* Features Grid */
@@ -1630,6 +1690,35 @@ body {
     .ese-esol-container {
         padding: 1rem;
     }
+
+    /* Piano responsive adjustments */
+    .piano-container {
+        max-width: 100%;
+        overflow-x: auto;
+        padding: 10px;
+    }
+
+    .piano-keys {
+        transform: scale(0.6);
+        transform-origin: left top;
+        margin: 0;
+        min-width: 1000px;
+        min-height: 120px;
+    }
+
+    .piano-info {
+        min-width: 150px;
+        padding: 0.5rem;
+    }
+
+    .note-display {
+        font-size: 1rem;
+    }
+
+    .frequency-display,
+    .octave-display {
+        font-size: 0.75rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1683,5 +1772,31 @@ body {
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
+    }
+
+    /* Piano responsive adjustments for small screens */
+    .piano-container {
+        padding: 5px;
+    }
+
+    .piano-keys {
+        transform: scale(0.5);
+        transform-origin: left top;
+        min-width: 1200px;
+        min-height: 100px;
+    }
+
+    .piano-info {
+        min-width: 120px;
+        padding: 0.25rem;
+    }
+
+    .note-display {
+        font-size: 0.875rem;
+    }
+
+    .frequency-display,
+    .octave-display {
+        font-size: 0.625rem;
     }
 }
