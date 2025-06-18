@@ -695,7 +695,11 @@ function handleSwipe() {
 // Interactive Music Balls
 function initializeMusicBalls() {
     const container = document.getElementById('music-balls-container');
-    if (!container) return;
+    console.log('Container found:', container);
+    if (!container) {
+        console.error('Music balls container not found!');
+        return;
+    }
 
     // Different pitches for each ball (major scale + pentatonic)
     const ballPitches = [
@@ -711,6 +715,8 @@ function initializeMusicBalls() {
         { frequency: 659.25, note: 'E5', icon: 'fas fa-music' }
     ];
 
+    console.log('Creating', ballPitches.length, 'music balls');
+
     // Create 10 music balls
     ballPitches.forEach((pitch, index) => {
         const ball = document.createElement('div');
@@ -719,10 +725,15 @@ function initializeMusicBalls() {
         ball.setAttribute('data-note', pitch.note);
         ball.style.animationDelay = `${index * 0.5}s`;
         
+        // Set initial position to make sure balls are visible
+        ball.style.left = (50 + index * 30) + 'px';
+        ball.style.top = (50 + (index % 3) * 80) + 'px';
+        
         ball.innerHTML = `<i class="${pitch.icon}"></i>`;
         
         // Add click event
         ball.addEventListener('click', function() {
+            console.log('Ball clicked:', pitch.note);
             playMusicBallNote(pitch.frequency, pitch.note);
             moveBallToRandomPosition(this);
             
@@ -734,13 +745,17 @@ function initializeMusicBalls() {
         });
         
         container.appendChild(ball);
+        console.log('Ball', index + 1, 'created and added');
     });
 
-    // Position all balls initially
-    const balls = container.querySelectorAll('.music-ball');
-    balls.forEach(ball => {
-        moveBallToRandomPosition(ball);
-    });
+    // Position all balls initially after a short delay
+    setTimeout(() => {
+        const balls = container.querySelectorAll('.music-ball');
+        console.log('Positioning', balls.length, 'balls');
+        balls.forEach((ball, index) => {
+            moveBallToRandomPosition(ball);
+        });
+    }, 100);
 }
 
 function playMusicBallNote(frequency, note) {
@@ -789,12 +804,16 @@ function moveBallToRandomPosition(ball) {
     const container = ball.parentElement;
     const containerRect = container.getBoundingClientRect();
     
+    console.log('Container rect:', containerRect);
+    
     // Calculate random position within container bounds
     const maxX = containerRect.width - 60; // 60px is the ball width
     const maxY = containerRect.height - 60; // 60px is the ball height
     
     const randomX = Math.random() * maxX;
     const randomY = Math.random() * maxY;
+    
+    console.log('Moving ball to:', randomX, randomY);
     
     // Apply new position with smooth transition
     ball.style.transition = 'all 0.8s ease-in-out';
