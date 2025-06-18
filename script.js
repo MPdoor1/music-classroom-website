@@ -56,9 +56,8 @@ let quizQuestions = [];
 
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing music balls...');
+    console.log('DOM loaded, initializing...');
     initializeNavigation();
-    initializeMusicBalls();
     initializeNoteRecognition();
     initializeRhythmGame();
     initializeInstrumentGame();
@@ -67,12 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Show home tab by default
     switchTab('home');
-    
-    // Test call after a delay to ensure everything is loaded
-    setTimeout(() => {
-        console.log('Testing music balls initialization again...');
-        initializeMusicBalls();
-    }, 1000);
 });
 
 // Navigation functionality
@@ -699,172 +692,4 @@ function handleSwipe() {
     }
 }
 
-// Interactive Music Balls
-function initializeMusicBalls() {
-    console.log('initializeMusicBalls function called');
-    
-    const container = document.getElementById('music-balls-container');
-    console.log('Container found:', container);
-    
-    if (!container) {
-        console.error('Music balls container not found!');
-        // Try to find it by class name as fallback
-        const fallbackContainer = document.querySelector('.music-balls-container');
-        console.log('Fallback container found:', fallbackContainer);
-        if (!fallbackContainer) {
-            console.error('No music balls container found at all!');
-            return;
-        }
-    }
-
-    // Different pitches for each ball (major scale + pentatonic)
-    const ballPitches = [
-        { frequency: 261.63, note: 'C4', icon: 'fas fa-music' },
-        { frequency: 293.66, note: 'D4', icon: 'fas fa-music' },
-        { frequency: 329.63, note: 'E4', icon: 'fas fa-music' },
-        { frequency: 349.23, note: 'F4', icon: 'fas fa-music' },
-        { frequency: 392.00, note: 'G4', icon: 'fas fa-music' },
-        { frequency: 440.00, note: 'A4', icon: 'fas fa-music' },
-        { frequency: 493.88, note: 'B4', icon: 'fas fa-music' },
-        { frequency: 523.25, note: 'C5', icon: 'fas fa-music' },
-        { frequency: 587.33, note: 'D5', icon: 'fas fa-music' },
-        { frequency: 659.25, note: 'E5', icon: 'fas fa-music' }
-    ];
-
-    console.log('Creating', ballPitches.length, 'music balls');
-
-    // Create 10 music balls
-    ballPitches.forEach((pitch, index) => {
-        const ball = document.createElement('div');
-        ball.className = 'music-ball';
-        ball.setAttribute('data-frequency', pitch.frequency);
-        ball.setAttribute('data-note', pitch.note);
-        ball.style.animationDelay = `${index * 0.5}s`;
-        
-        // Set initial position to make sure balls are visible
-        ball.style.left = (50 + index * 30) + 'px';
-        ball.style.top = (50 + (index % 3) * 80) + 'px';
-        
-        // Add inline styles to ensure visibility
-        ball.style.position = 'absolute';
-        ball.style.width = '60px';
-        ball.style.height = '60px';
-        ball.style.borderRadius = '50%';
-        ball.style.display = 'flex';
-        ball.style.alignItems = 'center';
-        ball.style.justifyContent = 'center';
-        ball.style.cursor = 'pointer';
-        ball.style.zIndex = '100';
-        ball.style.border = '3px solid white';
-        
-        // Set background color based on index
-        const colors = [
-            'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            'linear-gradient(135deg, #f59e0b, #ef4444)',
-            'linear-gradient(135deg, #10b981, #06b6d4)',
-            'linear-gradient(135deg, #8b5cf6, #ec4899)',
-            'linear-gradient(135deg, #f97316, #eab308)',
-            'linear-gradient(135deg, #06b6d4, #3b82f6)',
-            'linear-gradient(135deg, #ec4899, #f43f5e)',
-            'linear-gradient(135deg, #84cc16, #22c55e)',
-            'linear-gradient(135deg, #f43f5e, #a855f7)',
-            'linear-gradient(135deg, #22c55e, #14b8a6)'
-        ];
-        ball.style.background = colors[index];
-        
-        ball.innerHTML = `<i class="${pitch.icon}" style="font-size: 1.5rem; color: white;"></i>`;
-        
-        // Add click event
-        ball.addEventListener('click', function() {
-            console.log('Ball clicked:', pitch.note);
-            playMusicBallNote(pitch.frequency, pitch.note);
-            moveBallToRandomPosition(this);
-            
-            // Add click animation
-            this.style.transform = 'scale(0.8)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-            }, 150);
-        });
-        
-        container.appendChild(ball);
-        console.log('Ball', index + 1, 'created and added');
-    });
-
-    // Position all balls initially after a short delay
-    setTimeout(() => {
-        const balls = container.querySelectorAll('.music-ball');
-        console.log('Positioning', balls.length, 'balls');
-        balls.forEach((ball, index) => {
-            moveBallToRandomPosition(ball);
-        });
-    }, 100);
-}
-
-function playMusicBallNote(frequency, note) {
-    // Create Web Audio API context if it doesn't exist
-    if (!window.audioContext) {
-        window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    
-    // Resume audio context if suspended
-    if (window.audioContext.state === 'suspended') {
-        window.audioContext.resume();
-    }
-    
-    try {
-        // Create oscillator
-        const oscillator = window.audioContext.createOscillator();
-        const gainNode = window.audioContext.createGain();
-        
-        // Connect nodes
-        oscillator.connect(gainNode);
-        gainNode.connect(window.audioContext.destination);
-        
-        // Set frequency
-        oscillator.frequency.setValueAtTime(frequency, window.audioContext.currentTime);
-        
-        // Set waveform (sine wave for pleasant sound)
-        oscillator.type = 'sine';
-        
-        // Set envelope for pleasant sound
-        const now = window.audioContext.currentTime;
-        gainNode.gain.setValueAtTime(0, now);
-        gainNode.gain.linearRampToValueAtTime(0.3, now + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
-        
-        // Start and stop oscillator
-        oscillator.start(now);
-        oscillator.stop(now + 0.6);
-        
-        console.log(`Playing ${note} at ${frequency}Hz`);
-    } catch (error) {
-        console.error('Error playing note:', error);
-    }
-}
-
-function moveBallToRandomPosition(ball) {
-    const container = ball.parentElement;
-    const containerRect = container.getBoundingClientRect();
-    
-    console.log('Container rect:', containerRect);
-    
-    // Calculate random position within container bounds
-    const maxX = containerRect.width - 60; // 60px is the ball width
-    const maxY = containerRect.height - 60; // 60px is the ball height
-    
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
-    
-    console.log('Moving ball to:', randomX, randomY);
-    
-    // Apply new position with smooth transition
-    ball.style.transition = 'all 0.8s ease-in-out';
-    ball.style.left = randomX + 'px';
-    ball.style.top = randomY + 'px';
-    
-    // Reset transition after animation
-    setTimeout(() => {
-        ball.style.transition = 'all 0.3s ease';
-    }, 800);
-} 
+// End of file 
