@@ -324,6 +324,7 @@ body {
     position: relative;
     font-size: 0.8rem;
     flex-shrink: 0;
+    user-select: none;
 }
 
 .key.white {
@@ -349,6 +350,8 @@ body {
     font-size: 0.7rem;
     border: 1px solid #333;
     top: 0;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 /* Position black keys correctly like a real piano */
@@ -391,6 +394,12 @@ body {
 .key.black:active,
 .key.black.playing {
     background: #1a1a1a;
+}
+
+/* Ensure black keys are always clickable */
+.key.black:hover {
+    background: #2a2a2a;
+    transform: translateY(-3px);
 }
 
 /* Features Grid */

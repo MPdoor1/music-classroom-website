@@ -153,10 +153,18 @@ function switchTab(tabName) {
 // Piano functionality
 function initializePiano() {
     const keys = document.querySelectorAll('.key');
+    console.log('Found piano keys:', keys.length); // Debug: Check how many keys are found
     
-    keys.forEach(key => {
-        key.addEventListener('mousedown', function() {
-            playNote(this.getAttribute('data-note'));
+    keys.forEach((key, index) => {
+        const note = key.getAttribute('data-note');
+        const isBlack = key.classList.contains('black');
+        console.log(`Key ${index}: ${note} (${isBlack ? 'black' : 'white'})`); // Debug: Log each key
+        
+        key.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            const note = this.getAttribute('data-note');
+            console.log('Playing note:', note); // Debug: Log when key is pressed
+            playNote(note);
             this.classList.add('playing');
         });
 
@@ -171,12 +179,24 @@ function initializePiano() {
         // Touch events for mobile
         key.addEventListener('touchstart', function(e) {
             e.preventDefault();
-            playNote(this.getAttribute('data-note'));
+            const note = this.getAttribute('data-note');
+            console.log('Touch playing note:', note); // Debug: Log touch events
+            playNote(note);
             this.classList.add('playing');
         });
 
         key.addEventListener('touchend', function() {
             this.classList.remove('playing');
+        });
+
+        // Add click event as backup
+        key.addEventListener('click', function(e) {
+            e.preventDefault();
+            const note = this.getAttribute('data-note');
+            console.log('Click playing note:', note); // Debug: Log click events
+            playNote(note);
+            this.classList.add('playing');
+            setTimeout(() => this.classList.remove('playing'), 200);
         });
     });
 }
