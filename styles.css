@@ -323,6 +323,12 @@ body {
     justify-content: center;
 }
 
+.white-keys {
+    display: flex;
+    position: relative;
+    z-index: 1;
+}
+
 .key {
     border: 1px solid #ccc;
     cursor: pointer;
@@ -362,6 +368,18 @@ body {
     top: 0;
     margin-right: 0;
 }
+
+/* Black key positioning - each white key is 40px wide */
+.key[data-note="C#4"] { left: 26px; }
+.key[data-note="D#4"] { left: 66px; }
+.key[data-note="F#4"] { left: 146px; }
+.key[data-note="G#4"] { left: 186px; }
+.key[data-note="A#4"] { left: 226px; }
+.key[data-note="C#5"] { left: 306px; }
+.key[data-note="D#5"] { left: 346px; }
+.key[data-note="F#5"] { left: 426px; }
+.key[data-note="G#5"] { left: 466px; }
+.key[data-note="A#5"] { left: 506px; }
 
 .key.playing {
     background: #007bff !important;
