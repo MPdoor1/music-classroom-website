@@ -323,25 +323,6 @@ body {
     justify-content: center;
 }
 
-.white-keys {
-    display: flex;
-    position: relative;
-    z-index: 1;
-}
-
-.black-keys {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 2;
-    pointer-events: none;
-}
-
-.black-keys .key {
-    pointer-events: auto;
-}
-
 .key {
     border: 1px solid #ccc;
     cursor: pointer;
@@ -372,7 +353,7 @@ body {
 .key.black {
     background: #333;
     width: 28px;
-    height: 180px;
+    height: 120px;
     position: absolute;
     border-radius: 0 0 6px 6px;
     z-index: 2;
@@ -381,33 +362,6 @@ body {
     top: 0;
     margin-right: 0;
 }
-
-/* Black key positioning - positioned to appear between white keys like a real piano */
-/* White keys are 40px wide each, positioned in sequence */
-
-/* Octave 4 (C4-B4) - 7 white keys: C4(0), D4(41), E4(82), F4(123), G4(164), A4(205), B4(246) */
-/* C#4: between C4(0-40) and D4(41-81) = centered at 40.5px, so left: 40.5 - 14 = 26.5px */
-.key[data-note="C#4"] { left: 26.5px; }
-/* D#4: between D4(41-81) and E4(82-122) = centered at 81.5px, so left: 81.5 - 14 = 67.5px */
-.key[data-note="D#4"] { left: 67.5px; }
-/* F#4: between F4(123-163) and G4(164-204) = centered at 163.5px, so left: 163.5 - 14 = 149.5px */
-.key[data-note="F#4"] { left: 149.5px; }
-/* G#4: between G4(164-204) and A4(205-245) = centered at 204.5px, so left: 204.5 - 14 = 190.5px */
-.key[data-note="G#4"] { left: 190.5px; }
-/* A#4: between A4(205-245) and B4(246-286) = centered at 245.5px, so left: 245.5 - 14 = 231.5px */
-.key[data-note="A#4"] { left: 231.5px; }
-
-/* Octave 5 (C5-C6) - 8 white keys: C5(287), D5(328), E5(369), F5(410), G5(451), A5(492), B5(533), C6(574) */
-/* C#5: between C5(287-327) and D5(328-368) = centered at 327.5px, so left: 327.5 - 14 = 313.5px */
-.key[data-note="C#5"] { left: 313.5px; }
-/* D#5: between D5(328-368) and E5(369-409) = centered at 368.5px, so left: 368.5 - 14 = 354.5px */
-.key[data-note="D#5"] { left: 354.5px; }
-/* F#5: between F5(410-450) and G5(451-491) = centered at 450.5px, so left: 450.5 - 14 = 436.5px */
-.key[data-note="F#5"] { left: 436.5px; }
-/* G#5: between G5(451-491) and A5(492-532) = centered at 491.5px, so left: 491.5 - 14 = 477.5px */
-.key[data-note="G#5"] { left: 477.5px; }
-/* A#5: between A5(492-532) and B5(533-573) = centered at 532.5px, so left: 532.5 - 14 = 518.5px */
-.key[data-note="A#5"] { left: 518.5px; }
 
 .key.playing {
     background: #007bff !important;
