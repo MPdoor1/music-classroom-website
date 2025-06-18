@@ -56,6 +56,7 @@ let quizQuestions = [];
 
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing music balls...');
     initializeNavigation();
     initializeMusicBalls();
     initializeNoteRecognition();
@@ -66,6 +67,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Show home tab by default
     switchTab('home');
+    
+    // Test call after a delay to ensure everything is loaded
+    setTimeout(() => {
+        console.log('Testing music balls initialization again...');
+        initializeMusicBalls();
+    }, 1000);
 });
 
 // Navigation functionality
@@ -694,11 +701,20 @@ function handleSwipe() {
 
 // Interactive Music Balls
 function initializeMusicBalls() {
+    console.log('initializeMusicBalls function called');
+    
     const container = document.getElementById('music-balls-container');
     console.log('Container found:', container);
+    
     if (!container) {
         console.error('Music balls container not found!');
-        return;
+        // Try to find it by class name as fallback
+        const fallbackContainer = document.querySelector('.music-balls-container');
+        console.log('Fallback container found:', fallbackContainer);
+        if (!fallbackContainer) {
+            console.error('No music balls container found at all!');
+            return;
+        }
     }
 
     // Different pitches for each ball (major scale + pentatonic)
@@ -729,7 +745,34 @@ function initializeMusicBalls() {
         ball.style.left = (50 + index * 30) + 'px';
         ball.style.top = (50 + (index % 3) * 80) + 'px';
         
-        ball.innerHTML = `<i class="${pitch.icon}"></i>`;
+        // Add inline styles to ensure visibility
+        ball.style.position = 'absolute';
+        ball.style.width = '60px';
+        ball.style.height = '60px';
+        ball.style.borderRadius = '50%';
+        ball.style.display = 'flex';
+        ball.style.alignItems = 'center';
+        ball.style.justifyContent = 'center';
+        ball.style.cursor = 'pointer';
+        ball.style.zIndex = '100';
+        ball.style.border = '3px solid white';
+        
+        // Set background color based on index
+        const colors = [
+            'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            'linear-gradient(135deg, #f59e0b, #ef4444)',
+            'linear-gradient(135deg, #10b981, #06b6d4)',
+            'linear-gradient(135deg, #8b5cf6, #ec4899)',
+            'linear-gradient(135deg, #f97316, #eab308)',
+            'linear-gradient(135deg, #06b6d4, #3b82f6)',
+            'linear-gradient(135deg, #ec4899, #f43f5e)',
+            'linear-gradient(135deg, #84cc16, #22c55e)',
+            'linear-gradient(135deg, #f43f5e, #a855f7)',
+            'linear-gradient(135deg, #22c55e, #14b8a6)'
+        ];
+        ball.style.background = colors[index];
+        
+        ball.innerHTML = `<i class="${pitch.icon}" style="font-size: 1.5rem; color: white;"></i>`;
         
         // Add click event
         ball.addEventListener('click', function() {
