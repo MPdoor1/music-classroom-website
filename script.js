@@ -169,7 +169,6 @@ function initializePiano() {
             const frequency = this.getAttribute('data-frequency');
             console.log('Playing note:', note, 'Frequency:', frequency);
             playNote(note, frequency);
-            updatePianoDisplay(note, frequency);
             this.classList.add('playing');
             setTimeout(() => this.classList.remove('playing'), 200);
         });
@@ -261,25 +260,6 @@ function initializePiano() {
             keys[nextIndex].click();
         }
     });
-}
-
-function updatePianoDisplay(note, frequency) {
-    const noteDisplay = document.getElementById('current-note-display');
-    const frequencyDisplay = document.getElementById('frequency-display');
-    const octaveDisplay = document.getElementById('octave-display');
-    
-    if (noteDisplay) {
-        noteDisplay.textContent = `Note: ${note}`;
-    }
-    
-    if (frequencyDisplay) {
-        frequencyDisplay.textContent = `Frequency: ${frequency} Hz`;
-    }
-    
-    if (octaveDisplay) {
-        const octave = note.match(/\d/)[0];
-        octaveDisplay.textContent = `Octave: ${octave}`;
-    }
 }
 
 function playNote(note, frequency) {
