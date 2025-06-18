@@ -302,104 +302,102 @@ body {
 .piano-keys {
     display: flex;
     position: relative;
+    background: #f0f0f0;
     border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: visible;
-    background: var(--bg);
-    padding: 1rem;
-    min-width: 900px;
-    min-height: 220px;
+    min-height: 200px;
+    width: 100%;
 }
 
 .key {
-    width: 60px;
-    height: 200px;
-    border: 1px solid var(--border);
+    border: 1px solid #ccc;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.1s ease;
+    position: relative;
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    padding-bottom: 1rem;
-    font-weight: 600;
-    position: relative;
-    font-size: 0.8rem;
-    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
     user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .key.white {
     background: white;
-    color: var(--bg);
+    width: 60px;
+    height: 180px;
+    margin-right: 2px;
     border-radius: 0 0 8px 8px;
     z-index: 1;
-    border-right: 1px solid #ccc;
-}
-
-.key.white:last-child {
-    border-right: 1px solid var(--border);
+    flex-shrink: 0;
 }
 
 .key.black {
-    background: var(--bg);
-    color: white;
-    width: 36px;
+    background: #333;
+    width: 40px;
     height: 120px;
     position: absolute;
-    z-index: 10;
     border-radius: 0 0 6px 6px;
-    font-size: 0.7rem;
-    border: 1px solid #333;
+    z-index: 2;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     top: 0;
-    pointer-events: auto;
-    cursor: pointer;
 }
 
-/* Position black keys correctly like a real piano */
-.key[data-note="C#4"], .key[data-note="C#5"] {
-    left: 42px;
-}
+/* Position black keys between white keys - each white key is 62px wide (60px + 2px margin) */
+/* C# should be centered between C and D (position 31px from left edge of C) */
+.key[data-note*="C#"] { left: 31px; }
 
-.key[data-note="D#4"], .key[data-note="D#5"] {
-    left: 102px;
-}
+/* D# should be centered between D and E (position 93px from left edge of C) */
+.key[data-note*="D#"] { left: 93px; }
 
-.key[data-note="F#4"], .key[data-note="F#5"] {
-    left: 222px;
-}
+/* F# should be centered between F and G (position 217px from left edge of C) */
+.key[data-note*="F#"] { left: 217px; }
 
-.key[data-note="G#4"], .key[data-note="G#5"] {
-    left: 282px;
-}
+/* G# should be centered between G and A (position 279px from left edge of C) */
+.key[data-note*="G#"] { left: 279px; }
 
-.key[data-note="A#4"], .key[data-note="A#5"] {
-    left: 342px;
+/* A# should be centered between A and B (position 341px from left edge of C) */
+.key[data-note*="A#"] { left: 341px; }
+
+/* Adjust for different octaves - each octave is 744px wide (12 white keys * 62px) */
+.key[data-note*="4"] { left: calc(31px + 744px); }
+.key[data-note*="5"] { left: calc(31px + 1488px); }
+.key[data-note*="6"] { left: calc(31px + 2232px); }
+
+.key[data-note*="4"][data-note*="D#"] { left: calc(93px + 744px); }
+.key[data-note*="4"][data-note*="F#"] { left: calc(217px + 744px); }
+.key[data-note*="4"][data-note*="G#"] { left: calc(279px + 744px); }
+.key[data-note*="4"][data-note*="A#"] { left: calc(341px + 744px); }
+
+.key[data-note*="5"][data-note*="D#"] { left: calc(93px + 1488px); }
+.key[data-note*="5"][data-note*="F#"] { left: calc(217px + 1488px); }
+.key[data-note*="5"][data-note*="G#"] { left: calc(279px + 1488px); }
+.key[data-note*="5"][data-note*="A#"] { left: calc(341px + 1488px); }
+
+.key[data-note*="6"][data-note*="D#"] { left: calc(93px + 2232px); }
+.key[data-note*="6"][data-note*="F#"] { left: calc(217px + 2232px); }
+.key[data-note*="6"][data-note*="G#"] { left: calc(279px + 2232px); }
+.key[data-note*="6"][data-note*="A#"] { left: calc(341px + 2232px); }
+
+.key.playing {
+    background: #007bff !important;
+    transform: translateY(2px);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .key:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow);
+    background: #e9ecef !important;
 }
 
-.key:active,
-.key.playing {
-    transform: translateY(0);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.key.white:active,
-.key.white.playing {
-    background: #f0f0f0;
-}
-
-.key.black:active,
-.key.black.playing {
-    background: #1a1a1a;
-}
-
-/* Ensure black keys are always clickable */
 .key.black:hover {
-    background: #2a2a2a;
-    transform: translateY(-3px);
+    background: #555 !important;
 }
 
 /* Features Grid */
