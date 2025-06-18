@@ -65,6 +65,79 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeQuiz();
     initializeVocabularyStrategies();
     
+    // Initialize new interactive elements
+    enhanceFeatureCards();
+    enhanceResourceLinks();
+    
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Spacebar to start demo
+        if (e.code === 'Space' && !e.target.matches('input, textarea')) {
+            e.preventDefault();
+            startInteractiveDemo();
+        }
+        
+        // Number keys 1-5 to play notes
+        if (e.code >= 'Digit1' && e.code <= 'Digit5') {
+            const notes = ['C', 'D', 'E', 'F', 'G'];
+            const noteIndex = parseInt(e.code.slice(-1)) - 1;
+            if (notes[noteIndex]) {
+                playNote(notes[noteIndex]);
+            }
+        }
+    });
+    
+    // Add touch support for mobile
+    if ('ontouchstart' in window) {
+        const interactiveElements = document.querySelectorAll('.music-note, .rhythm-beat, .quiz-option');
+        interactiveElements.forEach(element => {
+            element.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                this.click();
+            });
+        });
+    }
+    
+    // Add smooth scrolling for navigation
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').slice(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Add intersection observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    const animateElements = document.querySelectorAll('.feature-card, .resource-link, .interactive-demo');
+    animateElements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(element);
+    });
+    
     // Show home tab by default
     switchTab('home');
 });
@@ -779,12 +852,227 @@ function generateNewQuiz() {
     }
 }
 
-// Interactive demo functions
+// Interactive Demo Functions
 function startInteractiveDemo() {
-    switchTab('challenges');
-    // Add any additional demo functionality
+    // Animate progress bar
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+        progressBar.style.width = '0%';
+        setTimeout(() => {
+            progressBar.style.width = '75%';
+        }, 500);
+    }
+    
+    // Add some visual feedback
+    const demo = document.querySelector('.interactive-demo');
+    if (demo) {
+        demo.style.transform = 'scale(1.02)';
+        setTimeout(() => {
+            demo.style.transform = 'scale(1)';
+        }, 200);
+    }
 }
 
+function playNote(note) {
+    // Create audio context for note playback
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    // Set frequency based on note
+    const frequencies = {
+        'C': 261.63,
+        'D': 293.66,
+        'E': 329.63,
+        'F': 349.23,
+        'G': 392.00
+    };
+    
+    oscillator.frequency.setValueAtTime(frequencies[note], audioContext.currentTime);
+    oscillator.type = 'sine';
+    
+    // Set up gain for smooth sound
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.5);
+    
+    // Visual feedback
+    const noteElement = event.target.closest('.music-note');
+    if (noteElement) {
+        noteElement.style.transform = 'scale(1.3) rotate(15deg)';
+        setTimeout(() => {
+            noteElement.style.transform = '';
+        }, 300);
+    }
+    
+    // Show note name
+    showNotification(`Playing note: ${note}`);
+}
+
+function tapBeat(beatElement) {
+    // Visual feedback
+    beatElement.classList.add('active');
+    
+    // Play a click sound
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.type = 'sine';
+    
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.2, audioContext.currentTime + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+    
+    setTimeout(() => {
+        beatElement.classList.remove('active');
+    }, 500);
+    
+    // Update progress bar
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+        const currentWidth = parseInt(progressBar.style.width) || 0;
+        const newWidth = Math.min(currentWidth + 10, 100);
+        progressBar.style.width = newWidth + '%';
+    }
+}
+
+function selectQuizOption(optionElement, isCorrect) {
+    // Remove previous selections
+    const options = optionElement.parentElement.querySelectorAll('.quiz-option');
+    options.forEach(opt => {
+        opt.classList.remove('correct', 'incorrect');
+    });
+    
+    // Add appropriate class
+    if (isCorrect) {
+        optionElement.classList.add('correct');
+        showNotification('Correct! "Forte" means loud in music.', 'success');
+    } else {
+        optionElement.classList.add('incorrect');
+        showNotification('Incorrect. "Forte" means loud in music.', 'error');
+    }
+    
+    // Update progress bar
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+        const currentWidth = parseInt(progressBar.style.width) || 0;
+        const newWidth = Math.min(currentWidth + 15, 100);
+        progressBar.style.width = newWidth + '%';
+    }
+}
+
+// Enhanced Feature Card Interactions
+function enhanceFeatureCards() {
+    const featureCards = document.querySelectorAll('.feature-card');
+    
+    featureCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-12px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+        
+        card.addEventListener('click', function() {
+            // Add click animation
+            this.style.transform = 'translateY(-8px) scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            }, 150);
+        });
+    });
+}
+
+// Enhanced Resource Link Interactions
+function enhanceResourceLinks() {
+    const resourceLinks = document.querySelectorAll('.resource-link');
+    
+    resourceLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1.2) rotate(5deg)';
+            }
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+}
+
+// Notification System
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span>${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+    `;
+    
+    // Add styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 300);
+        }
+    }, 3000);
+}
+
+// Interactive demo functions
 function exploreFeatures() {
     switchTab('vocabulary');
     // Add any additional exploration functionality

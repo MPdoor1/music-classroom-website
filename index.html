@@ -146,56 +146,135 @@
                     <div class="resource-links">
                         <a href="https://www.therhythmtrainer.com/" target="_blank" class="resource-link">
                             <i class="fas fa-drum"></i>
-                            <span>Rhythm Trainer</span>
+                            <div>
+                                <span>Rhythm Trainer</span>
+                                <div class="resource-description">Practice rhythm recognition and tapping exercises</div>
+                            </div>
                         </a>
                         <a href="https://www.musictheory.net/exercises" target="_blank" class="resource-link">
                             <i class="fas fa-music"></i>
-                            <span>Music Theory Exercises</span>
+                            <div>
+                                <span>Music Theory Exercises</span>
+                                <div class="resource-description">Interactive exercises for note reading and theory</div>
+                            </div>
                         </a>
                         <a href="https://teoria.com/" target="_blank" class="resource-link">
                             <i class="fas fa-graduation-cap"></i>
-                            <span>Teoria Music Theory</span>
+                            <div>
+                                <span>Teoria Music Theory</span>
+                                <div class="resource-description">Comprehensive music theory tutorials and exercises</div>
+                            </div>
                         </a>
                         <a href="https://trainer.thetamusic.com/en/course/introduction-ear-training" target="_blank" class="resource-link">
                             <i class="fas fa-headphones"></i>
-                            <span>Ear Training</span>
+                            <div>
+                                <span>Ear Training</span>
+                                <div class="resource-description">Develop your musical ear with interval recognition</div>
+                            </div>
                         </a>
                         <a href="https://www.quia.com/ws/539163.html" target="_blank" class="resource-link">
                             <i class="fas fa-gamepad"></i>
-                            <span>Music Vocabulary Games</span>
+                            <div>
+                                <span>Music Vocabulary Games</span>
+                                <div class="resource-description">Fun games to learn music terminology</div>
+                            </div>
+                        </a>
+                        <a href="https://www.musictheory.net/lessons" target="_blank" class="resource-link">
+                            <i class="fas fa-book-open"></i>
+                            <div>
+                                <span>Music Theory Lessons</span>
+                                <div class="resource-description">Step-by-step lessons on music theory concepts</div>
+                            </div>
                         </a>
                     </div>
                 </div>
             </div>
 
             <div class="features-grid">
-                <div class="feature-card" onclick="switchTab('challenges')">
-                    <div class="feature-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <h3>Interactive Challenges</h3>
-                    <p>Test your music knowledge with fun, engaging challenges</p>
-                </div>
                 <div class="feature-card" onclick="switchTab('vocabulary')">
-                    <div class="feature-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
+                    <i class="fas fa-book"></i>
                     <h3>Music Vocabulary</h3>
-                    <p>Learn essential music terms and concepts</p>
+                    <p>Learn essential music terms and concepts through interactive flashcards and games. Master the language of music with our comprehensive vocabulary section.</p>
+                    <button class="feature-btn">Explore Vocabulary</button>
+                </div>
+                <div class="feature-card" onclick="switchTab('before-reading')">
+                    <i class="fas fa-eye"></i>
+                    <h3>Before Reading Activities</h3>
+                    <p>Prepare for reading Chapter 9 with activities that activate prior knowledge and make predictions about rhythm and meter concepts.</p>
+                    <button class="feature-btn">Start Activities</button>
+                </div>
+                <div class="feature-card" onclick="switchTab('during-reading')">
+                    <i class="fas fa-book-open"></i>
+                    <h3>During Reading Strategies</h3>
+                    <p>Use graphic organizers and active reading strategies to engage with the text and understand rhythm and meter concepts.</p>
+                    <button class="feature-btn">View Strategies</button>
+                </div>
+                <div class="feature-card" onclick="switchTab('after-reading')">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>After Reading Activities</h3>
+                    <p>Solidify your understanding with summary writing, misconception correction, and real-world music applications.</p>
+                    <button class="feature-btn">Complete Activities</button>
                 </div>
                 <div class="feature-card" onclick="switchTab('readability')">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
+                    <i class="fas fa-chart-line"></i>
                     <h3>Readability Analysis</h3>
-                    <p>Analyze and improve your music reading skills</p>
+                    <p>Understand the complexity of Chapter 9 with detailed readability analysis using multiple measures and interpretation.</p>
+                    <button class="feature-btn">View Analysis</button>
                 </div>
-                <div class="feature-card" onclick="switchTab('dba')">
-                    <div class="feature-icon">
-                        <i class="fas fa-graduation-cap"></i>
+                <div class="feature-card" onclick="startInteractiveDemo()">
+                    <i class="fas fa-play"></i>
+                    <h3>Interactive Demo</h3>
+                    <p>Experience music concepts through hands-on interactive elements. Click to explore rhythm, pitch, and musical patterns.</p>
+                    <button class="feature-btn">Start Demo</button>
+                </div>
+            </div>
+
+            <!-- Interactive Demo Section -->
+            <div class="interactive-demo">
+                <h3>Interactive Music Experience</h3>
+                <p>Click on the elements below to explore different aspects of music theory and practice</p>
+                
+                <!-- Interactive Music Notes -->
+                <div class="music-interactive">
+                    <div class="music-note" onclick="playNote('C')">
+                        <i class="fas fa-music"></i>
                     </div>
-                    <h3>DBA Resources</h3>
-                    <p>Access comprehensive learning materials</p>
+                    <div class="music-note" onclick="playNote('D')">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="music-note" onclick="playNote('E')">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="music-note" onclick="playNote('F')">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="music-note" onclick="playNote('G')">
+                        <i class="fas fa-music"></i>
+                    </div>
+                </div>
+
+                <!-- Interactive Rhythm Pattern -->
+                <div class="rhythm-pattern">
+                    <div class="rhythm-beat" onclick="tapBeat(this)">♩</div>
+                    <div class="rhythm-beat" onclick="tapBeat(this)">♪</div>
+                    <div class="rhythm-beat" onclick="tapBeat(this)">♩</div>
+                    <div class="rhythm-beat" onclick="tapBeat(this)">♪</div>
+                </div>
+
+                <!-- Interactive Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+
+                <!-- Interactive Quiz Preview -->
+                <div class="quiz-preview">
+                    <div class="quiz-question">What does "forte" mean in music?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizOption(this, true)">Loud</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false)">Soft</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false)">Fast</div>
+                        <div class="quiz-option" onclick="selectQuizOption(this, false)">Slow</div>
+                    </div>
                 </div>
             </div>
         </section>
