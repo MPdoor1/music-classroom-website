@@ -54,16 +54,18 @@ let currentCategory = 'basics';
 let currentQuizQuestion = 0;
 let quizQuestions = [];
 
-// Initialize the application
+// Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
-    initializePiano();
+    initializeFloatingNote();
     initializeNoteRecognition();
     initializeRhythmGame();
     initializeInstrumentGame();
     initializeVocabulary();
     initializeQuiz();
-    loadVocabularyCards();
+    
+    // Show home tab by default
+    switchTab('home');
 });
 
 // Navigation functionality
@@ -148,162 +150,6 @@ function switchTab(tabName) {
     }
 
     currentTab = tabName;
-}
-
-// Piano functionality
-function initializePiano() {
-    const keys = document.querySelectorAll('.key');
-    console.log('Found piano keys:', keys.length);
-    
-    keys.forEach((key, index) => {
-        const note = key.getAttribute('data-note');
-        const frequency = key.getAttribute('data-frequency');
-        const isBlack = key.classList.contains('black');
-        console.log(`Key ${index}: ${note} (${isBlack ? 'black' : 'white'}) - ${frequency}Hz`);
-        
-        // Single click event handler
-        key.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            const note = this.getAttribute('data-note');
-            const frequency = this.getAttribute('data-frequency');
-            console.log('Playing note:', note, 'Frequency:', frequency);
-            playNote(note, frequency);
-            this.classList.add('playing');
-            setTimeout(() => this.classList.remove('playing'), 200);
-        });
-
-        // Visual feedback
-        key.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            this.classList.add('playing');
-        });
-
-        key.addEventListener('mouseup', function() {
-            this.classList.remove('playing');
-        });
-
-        key.addEventListener('mouseleave', function() {
-            this.classList.remove('playing');
-        });
-
-        // Touch events for mobile
-        key.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.classList.add('playing');
-        });
-
-        key.addEventListener('touchend', function() {
-            this.classList.remove('playing');
-        });
-
-        // Keyboard events for accessibility
-        key.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            }
-        });
-    });
-
-    // Add keyboard navigation
-    document.addEventListener('keydown', function(e) {
-        const keys = document.querySelectorAll('.key');
-        const currentKey = document.querySelector('.key:focus');
-        
-        if (!currentKey) return;
-        
-        const currentIndex = Array.from(keys).indexOf(currentKey);
-        let nextIndex = currentIndex;
-        
-        switch(e.key) {
-            case 'ArrowLeft':
-                e.preventDefault();
-                nextIndex = Math.max(0, currentIndex - 1);
-                break;
-            case 'ArrowRight':
-                e.preventDefault();
-                nextIndex = Math.min(keys.length - 1, currentIndex + 1);
-                break;
-            case 'ArrowUp':
-                e.preventDefault();
-                // Find the same note in the next octave
-                const currentNote = currentKey.getAttribute('data-note');
-                const noteName = currentNote.replace(/\d/, '');
-                const currentOctave = parseInt(currentNote.match(/\d/)[0]);
-                const nextOctave = Math.min(8, currentOctave + 1);
-                const nextNote = noteName + nextOctave;
-                const nextKey = document.querySelector(`[data-note="${nextNote}"]`);
-                if (nextKey) {
-                    nextKey.focus();
-                    nextKey.click();
-                }
-                return;
-            case 'ArrowDown':
-                e.preventDefault();
-                // Find the same note in the previous octave
-                const currentNoteDown = currentKey.getAttribute('data-note');
-                const noteNameDown = currentNoteDown.replace(/\d/, '');
-                const currentOctaveDown = parseInt(currentNoteDown.match(/\d/)[0]);
-                const prevOctave = Math.max(0, currentOctaveDown - 1);
-                const prevNote = noteNameDown + prevOctave;
-                const prevKey = document.querySelector(`[data-note="${prevNote}"]`);
-                if (prevKey) {
-                    prevKey.focus();
-                    prevKey.click();
-                }
-                return;
-        }
-        
-        if (nextIndex !== currentIndex) {
-            keys[nextIndex].focus();
-            keys[nextIndex].click();
-        }
-    });
-}
-
-function playNote(note, frequency) {
-    // Create Web Audio API context if it doesn't exist
-    if (!window.audioContext) {
-        window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    
-    // Resume audio context if suspended
-    if (window.audioContext.state === 'suspended') {
-        window.audioContext.resume();
-    }
-    
-    try {
-        // Create oscillator
-        const oscillator = window.audioContext.createOscillator();
-        const gainNode = window.audioContext.createGain();
-        
-        // Connect nodes
-        oscillator.connect(gainNode);
-        gainNode.connect(window.audioContext.destination);
-        
-        // Set frequency
-        oscillator.frequency.setValueAtTime(parseFloat(frequency), window.audioContext.currentTime);
-        
-        // Set waveform (sine wave for piano-like sound)
-        oscillator.type = 'sine';
-        
-        // Set envelope for piano-like sound
-        const now = window.audioContext.currentTime;
-        gainNode.gain.setValueAtTime(0, now);
-        gainNode.gain.linearRampToValueAtTime(0.3, now + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
-        
-        // Start and stop oscillator
-        oscillator.start(now);
-        oscillator.stop(now + 0.5);
-        
-        console.log(`Playing ${note} at ${frequency}Hz`);
-    } catch (error) {
-        console.error('Error playing note:', error);
-        // Fallback: just log the note
-        console.log(`Note played: ${note} (${frequency}Hz)`);
-    }
 }
 
 // Note Recognition Game
@@ -844,4 +690,110 @@ function handleSwipe() {
             console.log('Swipe right detected');
         }
     }
+}
+
+// Interactive Floating Note
+function initializeFloatingNote() {
+    const floatingNote = document.getElementById('floating-note');
+    if (!floatingNote) return;
+
+    // Pentatonic scale frequencies (C major pentatonic: C, D, E, G, A)
+    const pentatonicFrequencies = [
+        261.63, // C4
+        293.66, // D4
+        329.63, // E4
+        392.00, // G4
+        440.00, // A4
+        523.25, // C5
+        587.33, // D5
+        659.25, // E5
+        783.99, // G5
+        880.00, // A5
+        1046.50 // C6
+    ];
+
+    floatingNote.addEventListener('click', function() {
+        // Play random pentatonic pitch
+        const randomFrequency = pentatonicFrequencies[Math.floor(Math.random() * pentatonicFrequencies.length)];
+        playPentatonicNote(randomFrequency);
+        
+        // Move to random position
+        moveToRandomPosition();
+        
+        // Add click animation
+        this.style.transform = 'scale(0.8)';
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 150);
+    });
+
+    // Initial random position
+    moveToRandomPosition();
+}
+
+function playPentatonicNote(frequency) {
+    // Create Web Audio API context if it doesn't exist
+    if (!window.audioContext) {
+        window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    
+    // Resume audio context if suspended
+    if (window.audioContext.state === 'suspended') {
+        window.audioContext.resume();
+    }
+    
+    try {
+        // Create oscillator
+        const oscillator = window.audioContext.createOscillator();
+        const gainNode = window.audioContext.createGain();
+        
+        // Connect nodes
+        oscillator.connect(gainNode);
+        gainNode.connect(window.audioContext.destination);
+        
+        // Set frequency
+        oscillator.frequency.setValueAtTime(frequency, window.audioContext.currentTime);
+        
+        // Set waveform (sine wave for pleasant sound)
+        oscillator.type = 'sine';
+        
+        // Set envelope for pleasant sound
+        const now = window.audioContext.currentTime;
+        gainNode.gain.setValueAtTime(0, now);
+        gainNode.gain.linearRampToValueAtTime(0.3, now + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+        
+        // Start and stop oscillator
+        oscillator.start(now);
+        oscillator.stop(now + 0.8);
+        
+        console.log(`Playing pentatonic note at ${frequency}Hz`);
+    } catch (error) {
+        console.error('Error playing note:', error);
+    }
+}
+
+function moveToRandomPosition() {
+    const floatingNote = document.getElementById('floating-note');
+    if (!floatingNote) return;
+
+    const container = floatingNote.parentElement;
+    const containerRect = container.getBoundingClientRect();
+    
+    // Calculate random position within container bounds
+    const maxX = containerRect.width - 80; // 80px is the note width
+    const maxY = containerRect.height - 80; // 80px is the note height
+    
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+    
+    // Apply new position with smooth transition
+    floatingNote.style.transition = 'all 0.5s ease-in-out';
+    floatingNote.style.left = randomX + 'px';
+    floatingNote.style.top = randomY + 'px';
+    
+    // Reset transition after animation
+    setTimeout(() => {
+        floatingNote.style.transition = 'all 0.3s ease';
+    }, 500);
 } 

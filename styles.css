@@ -285,8 +285,8 @@ body {
     transform: translateY(-3px);
 }
 
-/* Interactive Piano */
-.interactive-piano {
+/* Interactive Music Element */
+.interactive-music-element {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -297,105 +297,75 @@ body {
     box-shadow: var(--shadow);
     overflow: hidden;
     margin: 2rem 0;
-    min-height: 300px;
-}
-
-.piano-container {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.piano-keys {
-    display: flex;
+    min-height: 400px;
     position: relative;
-    background: #f0f0f0;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    overflow: visible;
-    min-height: 200px;
-    width: 100%;
-    justify-content: center;
 }
 
-.white-keys {
-    display: flex;
-    position: relative;
-    z-index: 1;
-}
-
-.key {
-    border: 1px solid #ccc;
-    cursor: pointer;
-    transition: all 0.1s ease;
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: bold;
-    color: #333;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    margin-right: 1px;
-}
-
-.key.white {
-    background: white;
-    width: 40px;
-    height: 180px;
-    border-radius: 0 0 8px 8px;
-    z-index: 1;
-    flex-shrink: 0;
-}
-
-.key.black {
-    background: #333;
-    width: 28px;
-    height: 120px;
+.floating-note {
     position: absolute;
-    border-radius: 0 0 6px 6px;
-    z-index: 2;
+    width: 80px;
+    height: 80px;
+    background: var(--gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+    animation: float 3s ease-in-out infinite;
+    z-index: 10;
+}
+
+.floating-note:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+}
+
+.floating-note:active {
+    transform: scale(0.95);
+}
+
+.floating-note i {
+    font-size: 2rem;
     color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    top: 0;
-    margin-right: 0;
+    animation: pulse 2s infinite;
 }
 
-/* Black key positioning - each white key is 40px wide */
-.key[data-note="C#4"] { left: 26px; }
-.key[data-note="D#4"] { left: 66px; }
-.key[data-note="F#4"] { left: 146px; }
-.key[data-note="G#4"] { left: 186px; }
-.key[data-note="A#4"] { left: 226px; }
-.key[data-note="C#5"] { left: 306px; }
-.key[data-note="D#5"] { left: 346px; }
-.key[data-note="F#5"] { left: 426px; }
-.key[data-note="G#5"] { left: 466px; }
-.key[data-note="A#5"] { left: 506px; }
-
-.key.playing {
-    background: #007bff !important;
-    transform: translateY(2px);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-10px) rotate(5deg); 
+    }
 }
 
-.key:hover {
-    background: #e9ecef !important;
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.1); 
+    }
 }
 
-.key.black:hover {
-    background: #555 !important;
+.music-info {
+    text-align: center;
+    margin-top: 2rem;
+    z-index: 1;
 }
 
-/* Piano Info Display */
+.music-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.music-info p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
 
 /* Features Grid */
 .features-grid {
