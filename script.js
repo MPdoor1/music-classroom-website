@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeInstrumentGame();
     initializeVocabulary();
     initializeQuiz();
+    initializeVocabularyStrategies();
     
     // Show home tab by default
     switchTab('home');
@@ -512,48 +513,249 @@ function createVocabularyCard(card) {
     return cardDiv;
 }
 
-// Quiz functionality
-function initializeQuiz() {
-    generateNewQuiz();
+// Vocabulary Strategies Functionality
+function initializeVocabularyStrategies() {
+    // Initialize flashcard functionality
+    const flashcard = document.getElementById('demo-flashcard');
+    if (flashcard) {
+        flashcard.addEventListener('click', flipFlashcard);
+    }
+
+    // Initialize matching game
+    initializeMatchingGame();
+
+    // Initialize quiz functionality
+    initializeVocabularyQuiz();
+}
+
+// Flashcard functionality
+function flipFlashcard() {
+    const flashcard = document.getElementById('demo-flashcard');
+    if (flashcard) {
+        flashcard.classList.toggle('flipped');
+    }
+}
+
+// Audio playback functionality
+function playAudio(term) {
+    // Create audio context for generating tones
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    // Define frequencies for different terms
+    const frequencies = {
+        'rhythm': 220, // A3
+        'tempo': 261.63, // C4
+        'dynamics': 293.66, // D4
+        'meter': 329.63, // E4
+        'beat': 349.23, // F4
+        'measure': 392.00, // G4
+        'time': 440.00, // A4
+        'signature': 493.88 // B4
+    };
+    
+    const frequency = frequencies[term] || 440;
+    
+    // Create oscillator
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+    oscillator.type = 'sine';
+    
+    // Set volume envelope
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.1);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 1);
+    
+    // Visual feedback
+    const button = event.target.closest('.audio-btn');
+    if (button) {
+        button.style.background = '#10b981';
+        setTimeout(() => {
+            button.style.background = '';
+        }, 1000);
+    }
+}
+
+// Matching game functionality
+function initializeMatchingGame() {
+    const termItems = document.querySelectorAll('.term-item');
+    const definitionSlots = document.querySelectorAll('.definition-slot');
+    
+    // Add drag event listeners to term items
+    termItems.forEach(item => {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragend', handleDragEnd);
+    });
+    
+    // Add drop event listeners to definition slots
+    definitionSlots.forEach(slot => {
+        slot.addEventListener('dragover', handleDragOver);
+        slot.addEventListener('drop', handleDrop);
+        slot.addEventListener('dragenter', handleDragEnter);
+        slot.addEventListener('dragleave', handleDragLeave);
+    });
+}
+
+function handleDragStart(e) {
+    e.dataTransfer.setData('text/plain', e.target.dataset.term);
+    e.target.style.opacity = '0.5';
+}
+
+function handleDragEnd(e) {
+    e.target.style.opacity = '1';
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+}
+
+function handleDragEnter(e) {
+    e.preventDefault();
+    e.target.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+    e.target.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    e.target.classList.remove('drag-over');
+    
+    const term = e.dataTransfer.getData('text/plain');
+    const correctTerm = e.target.dataset.term;
+    
+    if (term === correctTerm) {
+        // Correct match
+        e.target.innerHTML = `<span style="color: #10b981; font-weight: 600;">${term}</span>`;
+        e.target.style.background = 'rgba(16, 185, 129, 0.1)';
+        e.target.style.border = '2px solid #10b981';
+        
+        // Remove the dragged item
+        const draggedItem = document.querySelector(`[data-term="${term}"]`);
+        if (draggedItem) {
+            draggedItem.style.display = 'none';
+        }
+        
+        showMatchingFeedback('Correct! Great job!', 'correct');
+    } else {
+        // Incorrect match
+        showMatchingFeedback('Try again! That\'s not the right match.', 'incorrect');
+    }
+}
+
+function showMatchingFeedback(message, type) {
+    const feedback = document.getElementById('matching-feedback');
+    if (feedback) {
+        feedback.textContent = message;
+        feedback.className = `matching-feedback ${type}`;
+        
+        setTimeout(() => {
+            feedback.textContent = '';
+            feedback.className = 'matching-feedback';
+        }, 3000);
+    }
+}
+
+function resetMatchingGame() {
+    // Reset all term items
+    const termItems = document.querySelectorAll('.term-item');
+    termItems.forEach(item => {
+        item.style.display = 'flex';
+    });
+    
+    // Reset all definition slots
+    const definitionSlots = document.querySelectorAll('.definition-slot');
+    definitionSlots.forEach(slot => {
+        slot.innerHTML = '<span>Drop here</span>';
+        slot.style.background = 'rgba(99, 102, 241, 0.1)';
+        slot.style.border = '2px dashed var(--border)';
+    });
+    
+    // Clear feedback
+    const feedback = document.getElementById('matching-feedback');
+    if (feedback) {
+        feedback.textContent = '';
+        feedback.className = 'matching-feedback';
+    }
+}
+
+// Vocabulary quiz functionality
+function initializeVocabularyQuiz() {
+    const quizOptions = document.querySelectorAll('.quiz-option');
+    quizOptions.forEach(option => {
+        option.addEventListener('click', handleQuizAnswer);
+    });
+}
+
+function handleQuizAnswer(e) {
+    const isCorrect = e.target.dataset.correct === 'true';
+    const feedback = document.getElementById('quiz-feedback');
+    
+    if (isCorrect) {
+        feedback.textContent = 'Correct! Well done!';
+        feedback.style.color = '#10b981';
+        e.target.style.background = '#10b981';
+        e.target.style.color = 'white';
+    } else {
+        feedback.textContent = 'Incorrect. Try again!';
+        feedback.style.color = '#ef4444';
+        e.target.style.background = '#ef4444';
+        e.target.style.color = 'white';
+    }
+    
+    // Disable all options after answering
+    const allOptions = document.querySelectorAll('.quiz-option');
+    allOptions.forEach(option => {
+        option.disabled = true;
+    });
 }
 
 function generateNewQuiz() {
-    const cards = vocabularyData[currentCategory];
-    quizQuestions = [];
+    // Quiz questions for Chapter 9 vocabulary
+    const quizQuestions = [
+        {
+            question: 'What does "forte" mean in music?',
+            options: ['Loud', 'Soft', 'Fast', 'Slow'],
+            correct: 0
+        },
+        {
+            question: 'What is a "measure" in music?',
+            options: ['A section of music with a specific number of beats', 'The speed of the music', 'The volume of the music', 'The key signature'],
+            correct: 0
+        },
+        {
+            question: 'What does "tempo" refer to?',
+            options: ['The volume of the music', 'The speed of the music', 'The key of the music', 'The rhythm pattern'],
+            correct: 1
+        },
+        {
+            question: 'What is "meter" in music?',
+            options: ['The volume level', 'The organization of beats into regular patterns', 'The key signature', 'The melody line'],
+            correct: 1
+        },
+        {
+            question: 'What does "piano" mean in music?',
+            options: ['Fast', 'Slow', 'Soft', 'Loud'],
+            correct: 2
+        }
+    ];
     
-    cards.forEach(card => {
-        const question = {
-            question: `What is the definition of "${card.term}"?`,
-            correct: card.definition,
-            options: [card.definition]
-        };
-        
-        // Add wrong options from other categories
-        const allCards = Object.values(vocabularyData).flat();
-        const wrongOptions = allCards
-            .filter(c => c.term !== card.term)
-            .map(c => c.definition)
-            .slice(0, 3);
-        
-        question.options = question.options.concat(wrongOptions);
-        shuffleArray(question.options);
-        quizQuestions.push(question);
-    });
+    // Get random question
+    const randomIndex = Math.floor(Math.random() * quizQuestions.length);
+    const question = quizQuestions[randomIndex];
     
-    shuffleArray(quizQuestions);
-    currentQuizQuestion = 0;
-    displayQuizQuestion();
-}
-
-function displayQuizQuestion() {
-    if (currentQuizQuestion >= quizQuestions.length) {
-        currentQuizQuestion = 0;
-    }
-    
-    const question = quizQuestions[currentQuizQuestion];
+    // Update quiz display
     const questionElement = document.getElementById('quiz-question');
     const optionsContainer = document.querySelector('.quiz-options');
-    const feedbackElement = document.getElementById('quiz-feedback');
+    const feedback = document.getElementById('quiz-feedback');
     
     if (questionElement) {
         questionElement.textContent = question.question;
@@ -561,60 +763,19 @@ function displayQuizQuestion() {
     
     if (optionsContainer) {
         optionsContainer.innerHTML = '';
-        question.options.forEach(option => {
+        question.options.forEach((option, index) => {
             const button = document.createElement('button');
             button.className = 'quiz-option';
             button.textContent = option;
-            button.addEventListener('click', function() {
-                checkQuizAnswer(option, question.correct);
-            });
+            button.dataset.correct = (index === question.correct).toString();
+            button.addEventListener('click', handleQuizAnswer);
             optionsContainer.appendChild(button);
         });
     }
     
-    if (feedbackElement) {
-        feedbackElement.textContent = '';
-        feedbackElement.className = 'quiz-feedback';
-    }
-}
-
-function checkQuizAnswer(selected, correct) {
-    const buttons = document.querySelectorAll('.quiz-option');
-    const feedbackElement = document.getElementById('quiz-feedback');
-    
-    buttons.forEach(button => {
-        button.classList.remove('correct', 'incorrect');
-        button.disabled = true;
-    });
-    
-    if (selected === correct) {
-        event.target.classList.add('correct');
-        feedbackElement.textContent = 'Correct! Well done!';
-        feedbackElement.className = 'quiz-feedback correct';
-    } else {
-        event.target.classList.add('incorrect');
-        feedbackElement.textContent = 'Incorrect! Try again.';
-        feedbackElement.className = 'quiz-feedback incorrect';
-        
-        // Show correct answer
-        buttons.forEach(button => {
-            if (button.textContent === correct) {
-                button.classList.add('correct');
-            }
-        });
-    }
-    
-    setTimeout(() => {
-        currentQuizQuestion++;
-        displayQuizQuestion();
-    }, 2000);
-}
-
-// Utility functions
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    if (feedback) {
+        feedback.textContent = '';
+        feedback.style.color = '';
     }
 }
 
