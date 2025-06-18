@@ -302,8 +302,8 @@ body {
 
 .piano-container {
     width: 100%;
-    max-width: 1400px;
-    overflow-x: auto;
+    max-width: 1000px;
+    margin: 0 auto;
     padding: 20px;
     background: #f0f0f0;
     border-radius: 8px;
@@ -319,8 +319,8 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: visible;
     min-height: 200px;
-    width: max-content;
-    min-width: 100%;
+    width: 100%;
+    justify-content: center;
 }
 
 .key {
@@ -364,21 +364,21 @@ body {
 }
 
 /* Black key positioning - calculated based on white key positions */
-/* Each white key is 40px wide + 1px margin = 41px total width */
+/* Each white key is 40px wide, black keys positioned between white keys */
 
 /* Octave 4 (C4-B4) - Middle C octave - 12 keys */
-.key[data-note="C#4"] { left: 25px; }
-.key[data-note="D#4"] { left: 66px; }
-.key[data-note="F#4"] { left: 148px; }
-.key[data-note="G#4"] { left: 189px; }
-.key[data-note="A#4"] { left: 230px; }
+.key[data-note="C#4"] { left: 30px; }
+.key[data-note="D#4"] { left: 71px; }
+.key[data-note="F#4"] { left: 153px; }
+.key[data-note="G#4"] { left: 194px; }
+.key[data-note="A#4"] { left: 235px; }
 
 /* Octave 5 (C5-C6) - 13 keys */
-.key[data-note="C#5"] { left: 271px; }
-.key[data-note="D#5"] { left: 312px; }
-.key[data-note="F#5"] { left: 394px; }
-.key[data-note="G#5"] { left: 435px; }
-.key[data-note="A#5"] { left: 476px; }
+.key[data-note="C#5"] { left: 276px; }
+.key[data-note="D#5"] { left: 317px; }
+.key[data-note="F#5"] { left: 399px; }
+.key[data-note="G#5"] { left: 440px; }
+.key[data-note="A#5"] { left: 481px; }
 
 .key.playing {
     background: #007bff !important;
@@ -633,7 +633,7 @@ body {
 
 .note-options {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
     margin-bottom: 1rem;
 }
@@ -1389,7 +1389,7 @@ body {
 
 .esol-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: 1fr;
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -1622,13 +1622,6 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .piano-keys {
-        transform: scale(0.8);
-        margin: 1rem 0;
-        min-width: 400px;
-        min-height: 160px;
-    }
-
     .note-options {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -1656,16 +1649,15 @@ body {
     /* Piano responsive adjustments */
     .piano-container {
         max-width: 100%;
-        overflow-x: auto;
         padding: 10px;
     }
 
     .piano-keys {
-        transform: scale(0.7);
-        transform-origin: left top;
+        transform: scale(0.8);
+        transform-origin: center;
         margin: 0;
-        min-width: 600px;
-        min-height: 140px;
+        width: 100%;
+        min-height: 160px;
     }
 
     .piano-info {
@@ -1710,10 +1702,6 @@ body {
         font-size: 0.875rem;
     }
 
-    .piano-keys {
-        transform: scale(0.8);
-    }
-
     .note-options {
         grid-template-columns: repeat(3, 1fr);
     }
@@ -1743,8 +1731,8 @@ body {
 
     .piano-keys {
         transform: scale(0.6);
-        transform-origin: left top;
-        min-width: 700px;
+        transform-origin: center;
+        width: 100%;
         min-height: 120px;
     }
 
