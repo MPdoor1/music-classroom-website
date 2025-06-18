@@ -22,7 +22,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
+            <div class="nav-logo" onclick="switchTab('home')">
                 <i class="fas fa-music"></i>
                 <span>Music Classroom</span>
             </div>
@@ -91,46 +91,47 @@
                 <div class="hero-visual">
                     <div class="interactive-piano">
                         <div class="piano-keys">
-                            <div class="key white" data-note="C"></div>
-                            <div class="key black" data-note="C#"></div>
-                            <div class="key white" data-note="D"></div>
-                            <div class="key black" data-note="D#"></div>
-                            <div class="key white" data-note="E"></div>
-                            <div class="key white" data-note="F"></div>
-                            <div class="key black" data-note="F#"></div>
-                            <div class="key white" data-note="G"></div>
-                            <div class="key black" data-note="G#"></div>
-                            <div class="key white" data-note="A"></div>
-                            <div class="key black" data-note="A#"></div>
-                            <div class="key white" data-note="B"></div>
+                            <div class="key white" data-note="C4"></div>
+                            <div class="key black" data-note="C#4"></div>
+                            <div class="key white" data-note="D4"></div>
+                            <div class="key black" data-note="D#4"></div>
+                            <div class="key white" data-note="E4"></div>
+                            <div class="key white" data-note="F4"></div>
+                            <div class="key black" data-note="F#4"></div>
+                            <div class="key white" data-note="G4"></div>
+                            <div class="key black" data-note="G#4"></div>
+                            <div class="key white" data-note="A4"></div>
+                            <div class="key black" data-note="A#4"></div>
+                            <div class="key white" data-note="B4"></div>
+                            <div class="key white" data-note="C5"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up">
+                <div class="feature-card" onclick="switchTab('challenges')">
                     <div class="feature-icon">
                         <i class="fas fa-trophy"></i>
                     </div>
                     <h3>Interactive Challenges</h3>
                     <p>Test your music knowledge with fun, engaging challenges</p>
                 </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card" onclick="switchTab('vocabulary')">
                     <div class="feature-icon">
                         <i class="fas fa-book"></i>
                     </div>
                     <h3>Music Vocabulary</h3>
                     <p>Learn essential music terms and concepts</p>
                 </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card" onclick="switchTab('readability')">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Readability Analysis</h3>
                     <p>Analyze and improve your music reading skills</p>
                 </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card" onclick="switchTab('dba')">
                     <div class="feature-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
@@ -146,7 +147,7 @@
                 <h2>Music Challenges</h2>
                 <p>Test your skills with these interactive challenges</p>
             </div>
-            
+
             <div class="challenges-container">
                 <div class="challenge-card">
                     <div class="challenge-header">
@@ -156,6 +157,13 @@
                     <div class="challenge-content">
                         <div class="note-display">
                             <div class="staff">
+                                <div class="staff-lines">
+                                    <div class="staff-line"></div>
+                                    <div class="staff-line"></div>
+                                    <div class="staff-line"></div>
+                                    <div class="staff-line"></div>
+                                    <div class="staff-line"></div>
+                                </div>
                                 <div class="treble-clef">𝄞</div>
                                 <div class="note" id="current-note">♩</div>
                             </div>
@@ -190,13 +198,14 @@
                                 <div class="beat">♩</div>
                             </div>
                             <div class="rhythm-controls">
-                                <button class="play-rhythm-btn">
+                                <button class="play-rhythm-btn" id="play-rhythm-btn">
                                     <i class="fas fa-play"></i> Play Pattern
                                 </button>
-                                <button class="tap-rhythm-btn">
+                                <button class="tap-rhythm-btn" id="tap-rhythm-btn">
                                     <i class="fas fa-hand-pointer"></i> Tap Rhythm
                                 </button>
                             </div>
+                            <div class="rhythm-feedback" id="rhythm-feedback"></div>
                         </div>
                     </div>
                 </div>
@@ -219,6 +228,7 @@
                                 <button class="instrument-btn" data-instrument="drums">Drums</button>
                                 <button class="instrument-btn" data-instrument="flute">Flute</button>
                             </div>
+                            <div class="instrument-feedback" id="instrument-feedback"></div>
                         </div>
                     </div>
                 </div>
@@ -273,70 +283,6 @@
             </div>
 
             <div class="readability-container">
-                <div class="readability-tools">
-                    <div class="tool-card">
-                        <h3>Sheet Music Analyzer</h3>
-                        <div class="upload-area" id="upload-area">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Upload sheet music or drag & drop</p>
-                            <input type="file" id="sheet-music-upload" accept="image/*" hidden>
-                        </div>
-                        <div class="analysis-results" id="analysis-results" style="display: none;">
-                            <h4>Analysis Results</h4>
-                            <div class="result-item">
-                                <span>Difficulty Level:</span>
-                                <span id="difficulty-level">Intermediate</span>
-                            </div>
-                            <div class="result-item">
-                                <span>Key Signature:</span>
-                                <span id="key-signature">C Major</span>
-                            </div>
-                            <div class="result-item">
-                                <span>Time Signature:</span>
-                                <span id="time-signature">4/4</span>
-                            </div>
-                            <div class="result-item">
-                                <span>Note Range:</span>
-                                <span id="note-range">C4 - G5</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tool-card">
-                        <h3>Reading Speed Test</h3>
-                        <div class="speed-test">
-                            <div class="test-display">
-                                <div class="staff-display" id="staff-display">
-                                    <div class="treble-clef">𝄞</div>
-                                    <div class="test-notes">
-                                        <span class="note">♩</span>
-                                        <span class="note">♪</span>
-                                        <span class="note">♩</span>
-                                        <span class="note">♪</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="test-controls">
-                                <button class="start-test-btn" id="start-test-btn">
-                                    <i class="fas fa-play"></i> Start Test
-                                </button>
-                                <div class="timer" id="timer">00:00</div>
-                            </div>
-                            <div class="test-results" id="test-results" style="display: none;">
-                                <h4>Your Results</h4>
-                                <div class="result-item">
-                                    <span>Time:</span>
-                                    <span id="test-time">00:00</span>
-                                </div>
-                                <div class="result-item">
-                                    <span>Accuracy:</span>
-                                    <span id="test-accuracy">95%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="practice-exercises">
                     <h3>Practice Exercises</h3>
                     <div class="exercise-grid">
@@ -353,6 +299,21 @@
                         <div class="exercise-card">
                             <h4>Interval Recognition</h4>
                             <p>Learn to recognize musical intervals</p>
+                            <button class="exercise-btn">Start Exercise</button>
+                        </div>
+                        <div class="exercise-card">
+                            <h4>Key Signature Practice</h4>
+                            <p>Master key signatures and scales</p>
+                            <button class="exercise-btn">Start Exercise</button>
+                        </div>
+                        <div class="exercise-card">
+                            <h4>Sight Reading</h4>
+                            <p>Improve your sight reading skills</p>
+                            <button class="exercise-btn">Start Exercise</button>
+                        </div>
+                        <div class="exercise-card">
+                            <h4>Chord Recognition</h4>
+                            <p>Learn to identify chords by sight</p>
                             <button class="exercise-btn">Start Exercise</button>
                         </div>
                     </div>
@@ -617,17 +578,17 @@
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#challenges">Challenges</a></li>
-                    <li><a href="#vocabulary">Vocabulary</a></li>
-                    <li><a href="#readability">Readability</a></li>
+                    <li><a href="#" onclick="switchTab('home')">Home</a></li>
+                    <li><a href="#" onclick="switchTab('challenges')">Challenges</a></li>
+                    <li><a href="#" onclick="switchTab('vocabulary')">Vocabulary</a></li>
+                    <li><a href="#" onclick="switchTab('readability')">Readability</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Resources</h4>
                 <ul>
-                    <li><a href="#dba">DBA</a></li>
-                    <li><a href="#ese-esol">ESE & ESOL</a></li>
+                    <li><a href="#" onclick="switchTab('dba')">DBA</a></li>
+                    <li><a href="#" onclick="switchTab('ese-esol')">ESE & ESOL</a></li>
                     <li><a href="#">Help</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
