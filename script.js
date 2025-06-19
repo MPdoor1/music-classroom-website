@@ -1823,7 +1823,6 @@ function completeSummary() {
     
     // Mark progress
     updateReadingProgress('after-reading', true);
-    showNotification('🎉 After Reading activities completed! You\'ve mastered Chapter 9!', 'success');
 }
 
 function updateSummaryProgress() {
@@ -1849,6 +1848,9 @@ function updateReadingProgress(section, completed) {
     
     if (statusElement) {
         const icon = statusElement.querySelector('i');
+        const progressKey = `reading-progress-${section}`;
+        const wasAlreadyCompleted = localStorage.getItem(progressKey) === 'completed';
+        
         if (completed) {
             icon.className = 'fas fa-check-circle';
             statusElement.classList.add('completed');
@@ -1858,11 +1860,12 @@ function updateReadingProgress(section, completed) {
                 stepElement.classList.add('completed');
             }
             
-            // Show celebration banner
-            showCompletionCelebration(section);
+            // Only show celebration banner if this is the first time completing
+            if (!wasAlreadyCompleted) {
+                showCompletionCelebration(section);
+            }
             
             // Save progress to localStorage
-            const progressKey = `reading-progress-${section}`;
             localStorage.setItem(progressKey, 'completed');
         } else {
             icon.className = 'fas fa-circle';
@@ -1874,7 +1877,6 @@ function updateReadingProgress(section, completed) {
             }
             
             // Remove from localStorage
-            const progressKey = `reading-progress-${section}`;
             localStorage.removeItem(progressKey);
         }
     }
@@ -1940,13 +1942,25 @@ function updateOverallProgress() {
 }
 
 function loadReadingProgress() {
-    // Load individual section progress
+    // Load individual section progress (without celebrations)
     const sections = ['before-reading', 'during-reading', 'after-reading'];
     sections.forEach(section => {
         const progressKey = `reading-progress-${section}`;
         const isCompleted = localStorage.getItem(progressKey) === 'completed';
         if (isCompleted) {
-            updateReadingProgress(section, true);
+            // Directly update the UI without triggering celebrations
+            const statusElement = document.getElementById(`${section.split('-')[0]}-status`);
+            const stepElement = document.querySelector(`[data-tab="${section}"]`);
+            
+            if (statusElement) {
+                const icon = statusElement.querySelector('i');
+                icon.className = 'fas fa-check-circle';
+                statusElement.classList.add('completed');
+                
+                if (stepElement) {
+                    stepElement.classList.add('completed');
+                }
+            }
         }
     });
     
@@ -1958,6 +1972,9 @@ function loadReadingProgress() {
         if (progressBar) progressBar.style.width = overallProgress + '%';
         if (progressText) progressText.textContent = overallProgress + '%';
     }
+    
+    // Update overall progress after loading
+    updateOverallProgress();
 }
 
 function resetAllProgress() {
@@ -2028,7 +2045,6 @@ function updatePredictionProgress() {
             statusElement.textContent = 'All predictions complete! ✓';
             // Mark before-reading as completed
             updateReadingProgress('before-reading', true);
-            showNotification('🎉 Before Reading activities completed! Ready to read!', 'success');
         }
     }
 }
@@ -2070,7 +2086,6 @@ function savePredictions() {
     
     if (predictions.length >= 3) {
         updateReadingProgress('before-reading', true);
-        showNotification('🎉 Before Reading activities completed! Ready to read!', 'success');
     }
 }
 
@@ -2443,7 +2458,6 @@ function updateMisconceptionProgress() {
         statusElement.textContent = `Excellent! ${completePairs} complete learning comparisons ✓`;
         statusElement.style.color = '#48bb78';
         updateReadingProgress('after-reading', true);
-        showNotification('🎉 After Reading activities completed! You\'ve mastered Chapter 9!', 'success');
     } else if (completePairs === 1) {
         statusElement.textContent = 'Great start! Add another misconception pair';
         statusElement.style.color = '#81e6d9';
@@ -2838,7 +2852,6 @@ function checkDuringReadingCompletion() {
     if (mainIdeaComplete && clefComplete && causeEffectComplete) {
         console.log('🎉 ALL REQUIREMENTS MET - MARKING AS COMPLETE!');
         updateReadingProgress('during-reading', true);
-        showNotification('🎉 During Reading activities completed! Great work!', 'success');
     } else {
         console.log('❌ Not all requirements met - keeping incomplete');
         updateReadingProgress('during-reading', false);
