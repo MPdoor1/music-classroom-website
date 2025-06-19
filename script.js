@@ -262,13 +262,23 @@ function switchTab(tabName) {
     if (sequenceFooter) {
         if (bdaTabs.includes(tabName)) {
             sequenceFooter.style.display = 'block';
-            // Initialize footer state and load progress when showing BDA tabs
+            // Initialize footer state and load progress when entering BDA tabs
             initializeSequenceFooter();
-            loadReadingProgress();
+            // Only load progress if we haven't loaded it yet or if switching from non-BDA tab
+            const wasBDATab = bdaTabs.includes(currentTab);
+            if (!wasBDATab) {
+                loadReadingProgress();
+            }
         } else {
             sequenceFooter.style.display = 'none';
         }
     }
+    
+    // Scroll to top when switching tabs
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
     
     // Close mobile menu after tab switch
     const navMenu = document.querySelector('.nav-menu');
@@ -1987,21 +1997,76 @@ function resetAllProgress() {
             status.classList.remove('completed');
         });
         
+        // Reset sequence steps
+        const sequenceSteps = document.querySelectorAll('.sequence-step');
+        sequenceSteps.forEach(step => {
+            step.classList.remove('completed');
+        });
+        
         // Reset interactive elements
         clearBrainstorm();
         resetVocabCards();
         clearSummary();
         clearAllPredictions();
         
-        // Clear localStorage
+        // Reset main idea inputs
+        const mainIdeaInputs = document.querySelectorAll('.main-idea-input');
+        mainIdeaInputs.forEach(input => input.value = '');
+        
+        const detailInputs = document.querySelectorAll('.detail-input');
+        detailInputs.forEach(input => input.value = '');
+        
+        // Reset misconception inputs
+        const misconceptionInputs = document.querySelectorAll('.misconception-input');
+        misconceptionInputs.forEach(input => input.value = '');
+        
+        // Reset clef exploration
+        const clefButtons = document.querySelectorAll('.clef-btn');
+        clefButtons.forEach(btn => btn.classList.remove('active'));
+        if (clefButtons[0]) clefButtons[0].classList.add('active'); // Reset to treble clef
+        
+        // Reset cause-effect matching
+        resetCauseEffectMatching();
+        
+        // Clear all localStorage
         const sections = ['before-reading', 'during-reading', 'after-reading'];
         sections.forEach(section => {
             localStorage.removeItem(`reading-progress-${section}`);
         });
         localStorage.removeItem('overall-reading-progress');
         localStorage.removeItem('musicPredictions');
+        localStorage.removeItem('musicTheory_mainIdeas');
+        localStorage.removeItem('musicTheory_clefData');
+        localStorage.removeItem('musicTheory_causeEffect');
+        localStorage.removeItem('musicTheory_misconceptions');
         
+        // Reset progress displays
         updateOverallProgress();
+        
+        // Reset specific progress counters
+        const predictionCount = document.getElementById('prediction-count');
+        if (predictionCount) predictionCount.textContent = '0';
+        
+        const vocabExplored = document.getElementById('vocab-explored');
+        if (vocabExplored) vocabExplored.textContent = '0';
+        
+        const summaryCount = document.getElementById('summary-count');
+        if (summaryCount) summaryCount.textContent = '0';
+        
+        const misconceptionCount = document.getElementById('misconception-count');
+        if (misconceptionCount) misconceptionCount.textContent = '0';
+        
+        // Reset clef progress
+        const clefsExplored = document.getElementById('clefs-explored');
+        if (clefsExplored) clefsExplored.textContent = '1';
+        
+        // Reset cause-effect progress
+        const causeEffectProgress = document.getElementById('cause-effect-progress');
+        if (causeEffectProgress) causeEffectProgress.textContent = '0';
+        
+        const causeEffectProgressBar = document.getElementById('cause-effect-progress-bar');
+        if (causeEffectProgressBar) causeEffectProgressBar.style.width = '0%';
+        
         showNotification('All progress reset!', 'info');
     }
 }
