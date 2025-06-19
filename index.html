@@ -92,6 +92,122 @@
                 </div>
             </section>
 
+            <!-- Music Reading Challenges Section -->
+            <section class="music-reading-challenges">
+                <div class="container">
+                    <h2>Understanding the Unique Challenges of Music Reading</h2>
+                    <p class="section-intro">Reading music presents distinct challenges that set it apart from reading in other academic areas. Understanding these differences helps students develop effective strategies for musical literacy.</p>
+                    
+                    <div class="challenges-grid">
+                        <div class="challenge-card">
+                            <div class="challenge-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <h4>Multilingual Terminology</h4>
+                            <p>Music reading requires familiarity with terms from multiple languages including German, French, and Italian. Students must decode musical expressions like "forte" (Italian for loud) and "andante" (Italian for walking pace).</p>
+                        </div>
+                        
+                        <div class="challenge-card">
+                            <div class="challenge-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h4>Specialized Prior Knowledge</h4>
+                            <p>Musical texts contain significant jargon that assumes extensive background knowledge. Terms like "diminished seventh chord" or "syncopated rhythm" require understanding of complex musical concepts.</p>
+                        </div>
+                        
+                        <div class="challenge-card">
+                            <div class="challenge-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h4>Symbolic Interpretation</h4>
+                            <p>Unlike traditional text, music reading involves interpreting abstract symbols, notation, and visual patterns that represent sound, timing, and expression simultaneously.</p>
+                        </div>
+                        
+                        <div class="challenge-card">
+                            <div class="challenge-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h4>Real-Time Processing</h4>
+                            <p>Music reading often requires immediate interpretation and physical response, as musicians must read and perform simultaneously without stopping to re-read passages.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="reading-differences">
+                        <h3>How Music Reading Differs from Other Academic Areas</h3>
+                        <div class="differences-content">
+                            <div class="key-insight">
+                                <i class="fas fa-quote-left"></i>
+                                <blockquote>
+                                    Reading is different in music because we have to interact with other languages on the regular, such as German, French, and Italian. Much of music is jargon that includes significant prior knowledge.
+                                </blockquote>
+                            </div>
+                            
+                            <div class="differences-list">
+                                <div class="difference-item">
+                                    <h5><i class="fas fa-language"></i> Language Complexity</h5>
+                                    <p>While traditional reading involves one primary language, music reading requires understanding terminology from multiple European languages, each with specific cultural and historical contexts.</p>
+                                </div>
+                                
+                                <div class="difference-item">
+                                    <h5><i class="fas fa-puzzle-piece"></i> Contextual Dependencies</h5>
+                                    <p>Music texts assume readers possess layered knowledge of theory, history, and performance practice that builds over years of study, making comprehension heavily dependent on accumulated expertise.</p>
+                                </div>
+                                
+                                <div class="difference-item">
+                                    <h5><i class="fas fa-layer-group"></i> Multi-Modal Literacy</h5>
+                                    <p>Students must simultaneously process visual notation, textual instructions, and auditory concepts, requiring integration of multiple literacy skills beyond traditional reading comprehension.</p>
+                                </div>
+                                
+                                <div class="difference-item">
+                                    <h5><i class="fas fa-graduation-cap"></i> Prerequisite Knowledge</h5>
+                                    <p>Unlike other subjects where context can be provided, music reading assumes familiarity with fundamental concepts like rhythm, pitch relationships, and harmonic structures that must be learned separately.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="developer-introduction">
+                        <h3>About the Developer</h3>
+                        <div class="developer-content">
+                            <div class="developer-info">
+                                <div class="developer-avatar">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div class="developer-details">
+                                    <h4>Kaden Gaines</h4>
+                                    <p class="developer-title">Music Education Major at UNF</p>
+                                    <p class="developer-description">
+                                        I am a music education major at the University of North Florida and have programmed this website using Cursor IDE. 
+                                        This project combines my passion for music education with web development to create interactive learning tools for students.
+                                    </p>
+                                    <div class="developer-links">
+                                        <a href="https://github.com/MPdoor1" target="_blank" class="github-link">
+                                            <i class="fab fa-github"></i>
+                                            <span>View Open Source Code</span>
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                    <div class="developer-tech">
+                                        <div class="tech-item">
+                                            <i class="fas fa-code"></i>
+                                            <span>Built with Cursor IDE</span>
+                                        </div>
+                                        <div class="tech-item">
+                                            <i class="fas fa-music"></i>
+                                            <span>Music Education Focus</span>
+                                        </div>
+                                        <div class="tech-item">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <span>UNF Student</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- External Resources Section -->
             <div class="resources-section">
                 <div class="container">
@@ -175,11 +291,11 @@
                     <p>See how hard Chapter 9 is to read. Understand the difficulty.</p>
                     <button class="feature-btn">Check Level</button>
                 </div>
-                <div class="feature-card" onclick="startInteractiveDemo()">
-                    <i class="fas fa-play"></i>
-                    <h3>Try It Out</h3>
-                    <p>Click to explore music concepts. Play with rhythm and notes.</p>
-                    <button class="feature-btn">Start Demo</button>
+                <div class="feature-card" onclick="switchTab('readability')">
+                    <i class="fas fa-universal-access"></i>
+                    <h3>ESE & ESOL Support</h3>
+                    <p>Learn how this website accommodates diverse learners.</p>
+                    <button class="feature-btn">View Support</button>
                 </div>
             </div>
 
@@ -774,6 +890,9 @@
                             <button class="btn btn-secondary" onclick="resetCauseEffectMatching()">
                                 <i class="fas fa-redo"></i> Reset
                             </button>
+                            <button class="btn btn-success" onclick="checkDuringReadingCompletion()" style="margin-left: 10px;">
+                                <i class="fas fa-check"></i> Debug Check
+                            </button>
                         </div>
                         
                         <div class="cause-effect-progress">
@@ -1038,6 +1157,153 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ESE and ESOL Accommodations Section -->
+            <div class="ese-esol-accommodations-section">
+                <div class="container">
+                    <h2>Supporting ESE and ESOL Students</h2>
+                    <p class="section-intro">This website incorporates evidence-based strategies and universal design principles to scaffold learning for Exceptional Student Education (ESE) and English for Speakers of Other Languages (ESOL) students.</p>
+                    
+                    <div class="accommodations-overview">
+                        <h3>How My Activities Scaffold Reading</h3>
+                        <p>My scaffolded approach follows research-based practices that support diverse learners by providing multiple entry points, visual supports, and graduated difficulty levels.</p>
+                    </div>
+                    
+                    <div class="accommodations-grid">
+                        <!-- ESE Accommodations -->
+                        <div class="accommodation-category">
+                            <div class="category-header">
+                                <div class="category-icon">
+                                    <i class="fas fa-universal-access"></i>
+                                </div>
+                                <h4>ESE Student Accommodations</h4>
+                                <p>Supporting students with diverse learning needs and exceptionalities</p>
+                            </div>
+                            
+                            <div class="accommodation-strategies">
+                                <div class="strategy-item">
+                                    <h5><i class="fas fa-eye"></i> Visual Learning Supports</h5>
+                                    <ul>
+                                        <li><strong>Interactive Flashcards:</strong> Visual-kinesthetic learning with immediate feedback</li>
+                                        <li><strong>Color-coded Elements:</strong> Consistent color schemes help organize information</li>
+                                        <li><strong>Icons and Graphics:</strong> Visual cues support text comprehension</li>
+                                        <li><strong>Progress Indicators:</strong> Visual tracking of completion builds confidence</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="strategy-item">
+                                    <h5><i class="fas fa-brain"></i> Memory and Processing Supports</h5>
+                                    <ul>
+                                        <li><strong>Chunked Information:</strong> Content broken into digestible sections</li>
+                                        <li><strong>Repetition and Review:</strong> Multiple exposures to key concepts</li>
+                                        <li><strong>Self-paced Learning:</strong> Students control their learning speed</li>
+                                        <li><strong>Multiple Modalities:</strong> Text, audio, and interactive elements</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="strategy-item">
+                                    <h5><i class="fas fa-hands-helping"></i> Executive Function Supports</h5>
+                                    <ul>
+                                        <li><strong>Clear Instructions:</strong> Step-by-step guidance for each activity</li>
+                                        <li><strong>Task Sequencing:</strong> Before/During/After reading structure</li>
+                                        <li><strong>Progress Tracking:</strong> Visual completion indicators</li>
+                                        <li><strong>Error Prevention:</strong> Guided input with validation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ESOL Accommodations -->
+                        <div class="accommodation-category">
+                            <div class="category-header">
+                                <div class="category-icon">
+                                    <i class="fas fa-globe-americas"></i>
+                                </div>
+                                <h4>ESOL Student Accommodations</h4>
+                                <p>Supporting English language learners with culturally responsive design</p>
+                            </div>
+                            
+                            <div class="accommodation-strategies">
+                                <div class="strategy-item">
+                                    <h5><i class="fas fa-language"></i> Language Development Supports</h5>
+                                    <ul>
+                                        <li><strong>Multilingual Vocabulary:</strong> Explicit teaching of German, French, and Italian terms</li>
+                                        <li><strong>Context Clues:</strong> Visual and textual supports for new vocabulary</li>
+                                        <li><strong>Sentence Frames:</strong> Structured templates for written responses</li>
+                                        <li><strong>Cognate Recognition:</strong> Connecting musical terms across languages</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="strategy-item">
+                                    <h5><i class="fas fa-book-open"></i> Reading Comprehension Scaffolds</h5>
+                                    <ul>
+                                        <li><strong>Pre-reading Activities:</strong> Activate background knowledge</li>
+                                        <li><strong>Graphic Organizers:</strong> Visual frameworks for understanding</li>
+                                        <li><strong>Think-alouds:</strong> Guided modeling of thinking processes</li>
+                                        <li><strong>Concept Mapping:</strong> Visual connections between ideas</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="strategy-item">
+                                    <h5><i class="fas fa-users"></i> Cultural Responsiveness</h5>
+                                    <ul>
+                                        <li><strong>Universal Examples:</strong> Music concepts from diverse traditions</li>
+                                        <li><strong>Flexible Pacing:</strong> Accommodation for processing time</li>
+                                        <li><strong>Multiple Representations:</strong> Visual, auditory, and kinesthetic options</li>
+                                        <li><strong>Background Building:</strong> Explicit instruction of cultural context</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="universal-design-principles">
+                        <h3>Universal Design for Learning (UDL) Implementation</h3>
+                        <div class="udl-principles">
+                            <div class="udl-principle">
+                                <div class="principle-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <h4>Multiple Means of Engagement</h4>
+                                <ul>
+                                    <li>Interactive activities maintain student interest</li>
+                                    <li>Choice in learning pathways increases motivation</li>
+                                    <li>Immediate feedback builds confidence</li>
+                                    <li>Progress tracking promotes self-regulation</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="udl-principle">
+                                <div class="principle-icon">
+                                    <i class="fas fa-broadcast-tower"></i>
+                                </div>
+                                <h4>Multiple Means of Representation</h4>
+                                <ul>
+                                    <li>Visual, auditory, and text-based content</li>
+                                    <li>Adjustable font sizes and high contrast design</li>
+                                    <li>Consistent navigation and layout</li>
+                                    <li>Symbol support for abstract concepts</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="udl-principle">
+                                <div class="principle-icon">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </div>
+                                <h4>Multiple Means of Expression</h4>
+                                <ul>
+                                    <li>Various input methods (typing, clicking, dragging)</li>
+                                    <li>Flexible response formats</li>
+                                    <li>Scaffolded writing supports</li>
+                                    <li>Alternative assessment options</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
         </section>
     </main>
 
@@ -1150,6 +1416,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=1.1"></script>
 </body>
 </html> 

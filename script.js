@@ -86,6 +86,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize BDA prediction inputs
     initializePredictionInputs();
     
+    // Initialize cause-effect matching game
+    loadCauseEffectData();
+    
     // Initialize new interactive elements
     enhanceFeatureCards();
     enhanceResourceLinks();
@@ -1820,6 +1823,7 @@ function completeSummary() {
     
     // Mark progress
     updateReadingProgress('after-reading', true);
+    showNotification('🎉 After Reading activities completed! You\'ve mastered Chapter 9!', 'success');
 }
 
 function updateSummaryProgress() {
@@ -1841,11 +1845,21 @@ function initializeSequenceFooter() {
 
 function updateReadingProgress(section, completed) {
     const statusElement = document.getElementById(`${section.split('-')[0]}-status`);
+    const stepElement = document.querySelector(`[data-tab="${section}"]`);
+    
     if (statusElement) {
         const icon = statusElement.querySelector('i');
         if (completed) {
             icon.className = 'fas fa-check-circle';
             statusElement.classList.add('completed');
+            
+            // Add completed class to the entire step
+            if (stepElement) {
+                stepElement.classList.add('completed');
+            }
+            
+            // Show celebration banner
+            showCompletionCelebration(section);
             
             // Save progress to localStorage
             const progressKey = `reading-progress-${section}`;
@@ -1854,6 +1868,11 @@ function updateReadingProgress(section, completed) {
             icon.className = 'fas fa-circle';
             statusElement.classList.remove('completed');
             
+            // Remove completed class from the entire step
+            if (stepElement) {
+                stepElement.classList.remove('completed');
+            }
+            
             // Remove from localStorage
             const progressKey = `reading-progress-${section}`;
             localStorage.removeItem(progressKey);
@@ -1861,6 +1880,48 @@ function updateReadingProgress(section, completed) {
     }
     
     updateOverallProgress();
+}
+
+function showCompletionCelebration(section) {
+    // Create celebration banner
+    const banner = document.createElement('div');
+    banner.className = 'completion-banner';
+    
+    const sectionNames = {
+        'before-reading': 'Before Reading',
+        'during-reading': 'During Reading', 
+        'after-reading': 'After Reading'
+    };
+    
+    const sectionMessages = {
+        'before-reading': 'You\'re ready to dive into Chapter 9!',
+        'during-reading': 'Great active reading strategies!',
+        'after-reading': 'You\'ve mastered Chapter 9!'
+    };
+    
+    banner.innerHTML = `
+        <div class="celebration-icon">🎉</div>
+        <h3>${sectionNames[section]} Complete!</h3>
+        <p>${sectionMessages[section]}</p>
+    `;
+    
+    document.body.appendChild(banner);
+    
+    // Add celebration effect to progress bar
+    const progressBar = document.getElementById('sequence-progress-bar');
+    if (progressBar) {
+        progressBar.classList.add('celebrating');
+        setTimeout(() => {
+            progressBar.classList.remove('celebrating');
+        }, 1000);
+    }
+    
+    // Remove banner after animation
+    setTimeout(() => {
+        if (banner.parentNode) {
+            banner.parentNode.removeChild(banner);
+        }
+    }, 3000);
 }
 
 function updateOverallProgress() {
@@ -1967,6 +2028,7 @@ function updatePredictionProgress() {
             statusElement.textContent = 'All predictions complete! ✓';
             // Mark before-reading as completed
             updateReadingProgress('before-reading', true);
+            showNotification('🎉 Before Reading activities completed! Ready to read!', 'success');
         }
     }
 }
@@ -2008,6 +2070,7 @@ function savePredictions() {
     
     if (predictions.length >= 3) {
         updateReadingProgress('before-reading', true);
+        showNotification('🎉 Before Reading activities completed! Ready to read!', 'success');
     }
 }
 
@@ -2379,7 +2442,8 @@ function updateMisconceptionProgress() {
     if (completePairs >= 2) {
         statusElement.textContent = `Excellent! ${completePairs} complete learning comparisons ✓`;
         statusElement.style.color = '#48bb78';
-        updateReadingSequenceProgress('after-reading', true);
+        updateReadingProgress('after-reading', true);
+        showNotification('🎉 After Reading activities completed! You\'ve mastered Chapter 9!', 'success');
     } else if (completePairs === 1) {
         statusElement.textContent = 'Great start! Add another misconception pair';
         statusElement.style.color = '#81e6d9';
@@ -2710,6 +2774,8 @@ function updateMainIdeaProgress() {
 
 // New function to check if all during reading activities are complete
 function checkDuringReadingCompletion() {
+    console.log('🔍 Checking During Reading Completion...');
+    
     // Check main idea completion (need 2+ complete sets)
     let mainIdeaComplete = false;
     let completeSets = 0;
@@ -2721,35 +2787,61 @@ function checkDuringReadingCompletion() {
         const mainIdeaFilled = originalMainIdea.value.trim() !== '';
         const filledDetails = Array.from(originalDetails).filter(input => input.value.trim() !== '').length;
         
+        console.log(`📝 Original Main Idea: "${originalMainIdea.value.trim()}" (filled: ${mainIdeaFilled})`);
+        console.log(`📝 Original Details: ${filledDetails}/3 filled`);
+        
         if (mainIdeaFilled && filledDetails >= 3) {
             completeSets++;
+            console.log('✅ Original main idea set is complete');
+        } else {
+            console.log('❌ Original main idea set is incomplete');
         }
+    } else {
+        console.log('❌ Original main idea input not found');
     }
     
     const mainIdeaSets = document.querySelectorAll('.main-idea-set');
-    mainIdeaSets.forEach(set => {
+    console.log(`📝 Found ${mainIdeaSets.length} additional main idea sets`);
+    
+    mainIdeaSets.forEach((set, index) => {
         const mainIdea = set.querySelector('.main-idea-input').value.trim();
         const details = set.querySelectorAll('.detail-input');
         const filledDetails = Array.from(details).filter(input => input.value.trim() !== '').length;
         
+        console.log(`📝 Set ${index + 1}: "${mainIdea}" with ${filledDetails}/3 details`);
+        
         if (mainIdea && filledDetails >= 3) {
             completeSets++;
+            console.log(`✅ Main idea set ${index + 1} is complete`);
+        } else {
+            console.log(`❌ Main idea set ${index + 1} is incomplete`);
         }
     });
     
     mainIdeaComplete = completeSets >= 2;
+    console.log(`📊 Main Ideas: ${completeSets}/2 complete sets (${mainIdeaComplete ? 'COMPLETE' : 'INCOMPLETE'})`);
     
     // Check clef comparison completion (need all 3 clefs explored)
     const clefComplete = exploredClefs.size === 3;
+    console.log(`🎼 Clefs Explored: ${exploredClefs.size}/3 (${Array.from(exploredClefs).join(', ')}) - ${clefComplete ? 'COMPLETE' : 'INCOMPLETE'}`);
     
     // Check cause-effect matching completion (need all 6 matches)
     const causeEffectComplete = Object.keys(causeEffectMatches).length === currentCauseEffectSet.length && currentCauseEffectSet.length === 6;
+    console.log(`🔗 Cause-Effect: ${Object.keys(causeEffectMatches).length}/${currentCauseEffectSet.length} matches (${causeEffectComplete ? 'COMPLETE' : 'INCOMPLETE'})`);
+    
+    console.log('📊 SUMMARY:');
+    console.log(`   Main Ideas: ${mainIdeaComplete ? '✅' : '❌'} (${completeSets}/2 sets)`);
+    console.log(`   Clefs: ${clefComplete ? '✅' : '❌'} (${exploredClefs.size}/3 explored)`);
+    console.log(`   Cause-Effect: ${causeEffectComplete ? '✅' : '❌'} (${Object.keys(causeEffectMatches).length}/${currentCauseEffectSet.length} matched)`);
     
     // Mark during reading as complete only if ALL activities are complete
     if (mainIdeaComplete && clefComplete && causeEffectComplete) {
-        updateReadingSequenceProgress('during-reading', true);
+        console.log('🎉 ALL REQUIREMENTS MET - MARKING AS COMPLETE!');
+        updateReadingProgress('during-reading', true);
+        showNotification('🎉 During Reading activities completed! Great work!', 'success');
     } else {
-        updateReadingSequenceProgress('during-reading', false);
+        console.log('❌ Not all requirements met - keeping incomplete');
+        updateReadingProgress('during-reading', false);
     }
 }
 
